@@ -1,6 +1,6 @@
-const Pool = require("pg").Pool;
+import {Pool} from 'pg'
 
-const getClient= async ()=> {
+export const getClient= async ()=> {
 
     try{
         const client = new Pool({
@@ -19,4 +19,3 @@ const getClient= async ()=> {
 
 }
 
-module.exports= getClient

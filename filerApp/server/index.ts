@@ -1,12 +1,12 @@
-const express= require('express')
-const getClient= require('./connection/db')
-const cors= require('cors')
-
-const dotenv= require('dotenv')
+import express from 'express'
+import {getClient} from './connection/db'
+import cors from 'cors'
+import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express();
 app.use(express.json())
+app.use(cors())
 
 getClient()
 
