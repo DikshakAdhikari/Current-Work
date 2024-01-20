@@ -9,23 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getClient = void 0;
-const pg_1 = require("pg");
-const getClient = () => __awaiter(void 0, void 0, void 0, function* () {
+const db_1 = require("./connection/db");
+const createTable = () => __awaiter(void 0, void 0, void 0, function* () {
+    const userTable = `
+    CREATE TABLE users (
+        id BIGSERIAL PRIMARY KEY,
+        username VARCHAR(20) NOT NULL,
+        email VARCHAR(30) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL
+    );
+    `;
     try {
-        const client = new pg_1.Pool({
-            "user": "root",
-            "password": "root",
-            "host": "localhost",
-            "port": 5432,
-            "database": "test_db"
-        });
-        yield client.connect();
-        console.log('Postgtes connected successfully!');
-        return client;
+        const client = yield (0, db_1.getClient)();
+        const userSchema = yield (client === null || client === void 0 ? void 0 : client.query(userTable));
+        console.log('Table created successfully!');
     }
     catch (err) {
         console.log(err);
     }
 });
-exports.getClient = getClient;
+createTable();
