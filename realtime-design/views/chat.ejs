@@ -8,10 +8,22 @@
 </head>
 <body>
     <h1>REDIS</h1>
+    <div id="messages">
+        <input type="text" id="message" name="message">
+        <br/>
+        <br/>
+        <button onclick="emitData()" >Submit</button>
+    </div>
 </body>
 <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
 <script>
     const socket= io("http://localhost:5000")
-    
+    const emitData = ()=> {
+        const message= document.querySelector("#message").value
+        socket.emit("message", {message, from: "<%= username %>"})
+    }
+    socket.on("message", ({from, message})=> {
+
+    })
 </script>
 </html>

@@ -9,12 +9,15 @@ app.set("view engine", "ejs")
 const server= http.createServer(app)
 const io= new Server(server)
 
-io.on('connection', (message) => {
-
-} )
+io.on("connection", socket => {
+    socket.on("message", ({message, from})=> {
+        console.log(message, from);
+    } )
+})
 
 app.get('/chat', async(req,res)=> {
-    res.render("chat")
+    const username= req.query.username
+    res.render("chat",{username})
 })
 
 app.get('/', async (req, res)=> {
