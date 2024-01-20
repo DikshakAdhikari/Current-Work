@@ -1,7 +1,9 @@
 import express from 'express'
 import { getClient } from '../connection/db'
+import bcrypt, { hash } from 'bcrypt'
 
 const userRouter= express.Router()
+const saltRounds=10;
 
 userRouter.post('/', async(req,res)=> {
     try{
@@ -10,11 +12,19 @@ userRouter.post('/', async(req,res)=> {
         
         const client = await getClient()
         const existingUser= await client?.query("SELECT * FROM users WHERE username=$1",[username])
-        console.log(existingUser?.rows);
-        if(existingUser){
-            const saveUser= await client?.query("INSERT INTO users (username,email,password) VALUES ($1, $2, $3)", [username,email,password]);
-            console.log(saveUser);
-            res.json(existingUser)
+        console.log(existingUser);
+        if(!existingUser?.rows ){
+            const statement= "INSERT INTO users (username,email,password) VALUES ($1, $2, $3)"
+            bcrypt.hash(password, saltRounds ,async (err, hash)=> {
+                if(err){
+                    throw err
+                }
+                const values= [username, email,hash]
+                const saveUser= await client?.query(statement, values);
+                console.log('stored');
+                res.json('stored!')
+                
+            })
             
         }else{
             res.status(400).json("User already exists!")
@@ -27,16 +37,31 @@ userRouter.post('/', async(req,res)=> {
 userRouter.post('/signin', async(req,res)=> {
     try{
         const {email, password}= req.body;
-        const client= await getClient()
-        const existingUser= await client?.query("SELECT * FROM users WHERE email=$1 AND password=$2",[email,password])
+        console.log(email,password);
         
-        if(existingUser){
-            console.log('dfdfdfdfdfd');
+        const client= await getClient()
+        const existingUser= await client?.query("SELECT * FROM users WHERE email=$1",[email])
+        
+        if(existingUser?.rows){
+            const hashedPassword= existingUser.rows[0].password
+            bcrypt.compare(password, hashedPassword , (err, result)=> {
+                if(err){
+                    throw err
+                }
+                if(result){
+                    res.json("signed in successfully!")
+                }else{
+                    throw new Error('Password verification failed!')
+                }
+                
+            })
             
+        }else{
+            res.status(403).json({message:"Register user first!"})
         }
 
     }catch(err){
-        res.send(403)
+        res.status(403).json({message:err})
     }
 })
 
