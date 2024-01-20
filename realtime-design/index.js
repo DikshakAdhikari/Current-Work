@@ -11,7 +11,7 @@ const io= new Server(server)
 
 io.on("connection", socket => {
     socket.on("message", ({message, from})=> {
-        console.log(message, from);
+        io.emit("message", {message,from}) // here we have written io instead of socket.emit because io is responsible to send the message to all the users connected to our server. If we would have used just the socket then it would send message to the user who have made the message
     } )
 })
 
