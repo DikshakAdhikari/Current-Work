@@ -1,13 +1,18 @@
 const express= require('express');
 const {Server}= require('socket.io')
 const app = express()
-const http = require("http")
+const http = require("http");
+const { createClient } = require('redis');
 app.use(express.json())
 
 app.set("view engine", "ejs")
 
 const server= http.createServer(app)
 const io= new Server(server)
+const client= createClient()
+
+
+
 
 io.on("connection", socket => {
     socket.on("message", ({message, from})=> {
@@ -17,7 +22,9 @@ io.on("connection", socket => {
 
 app.get('/chat', async(req,res)=> {
     const username= req.query.username
+    io.emit("joined", username)
     res.render("chat",{username})
+
 })
 
 app.get('/', async (req, res)=> {
