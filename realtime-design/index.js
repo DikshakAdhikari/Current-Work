@@ -34,7 +34,7 @@ io.on("connection", socket => {
     sendMessage(socket);
 
     socket.on("message", ({ message, from }) => {
-        client.rPush("messages", `${from}:${message}`);
+        client.rpush("messages", `${from}:${message}`);
 
         io.emit("message", { from, message });
     });
