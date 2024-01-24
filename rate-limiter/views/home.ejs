@@ -5,7 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .urlDiv{
+        display: flex;
+        gap: 80px;
+        justify-content: center;
+        align-items: center;       
+    }
+
+    .btn{
+        padding: 1.3rem;
+        font-size: medium;
+        border-radius: 10%;;
+        cursor: pointer;
+    }
+
+</style>
 <body>
-    <h2>Hey you there</h2>
+    <h2>My urls</h2>
+    <div class="urlDiv">
+        <form action="/url1" method="get" >
+        <button onclick="submit"  class="btn">URL1</button>
+        <% url1data.forEach((item) => { %>
+            <li><%= item %></li>
+          <% }); %>
+     </form>
+        <button class="btn">URL2</button>
+        <button class="btn">URL3</button>
+    </div>
 </body>
+<script>
+   
+</script>
+
 </html>
