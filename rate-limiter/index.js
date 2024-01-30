@@ -11,6 +11,13 @@ app.set("views", path.resolve('./views')) //app.set("views", path.join(__dirname
 
 app.use('/', staticRoute )
 
+client.on('connect', function() {
+    console.log('Redis client connected');
+});
+
+client.on('error', function (err) {
+    console.error('Redis error:', err);
+});
 
 // app.get('/', (req,res)=> {
 //     res.render("home")

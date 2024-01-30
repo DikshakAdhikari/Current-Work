@@ -10,7 +10,7 @@ router.get('/', (req,res)=> {
     })
 });
 
-router.get('/url1', limiter,  async(req,res)=> {
+router.get('/url1', limiter(60,10),  async(req,res)=> {
     console.log('generation');
     try{
         let url1Output ="Dikshak is a master"  //newItem= req.body.name
