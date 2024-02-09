@@ -1,29 +1,29 @@
-const express= require('express');
-const connect = require('./connection/connect');
-const createServer= require("http").createServer
-const {Server}= require('socket.io')
-const port= 4000
+const express = require('express');
+const { createServer } = require('node:http');
+const { join } = require('node:path');
+const { Server } = require('socket.io');
 
-const app= express();
-const server= createServer(app)
+const app = express();
+const server = createServer(app);
+const io = new Server(server ,{
+  cors:{
+     origin:"http://localhost:3001",
+     credentials:true,
+  }
+});
 
-const io= new Server(server)
+// app.get('/', (req, res) => {
+//   res.sendFile(join(__dirname, 'index.html'));
+// });
 
-
-connect()
-app.use(express.json())
-
-app.get('/', (req, res) => {
-    res.send('<h1>Hello world</h1>');
-  });
-
-
-
-app.listen(port , ()=> {
-    console.log(`Server listening on port ${port}`);
+io.on("connect", (socket)=> {
+  // console.log(socket.id);
+  socket.emit("message", socket.id)
+  socket.on("chat", ({text, room})=> {
+    io.emit("user:chat", {text,room})
+  } )
 })
 
-
- io.on('connection' , (socket)=> {
-    console.log('a user connected!');
- })
+server.listen(5000, () => {
+  console.log('server running at http://localhost:5000');
+});
