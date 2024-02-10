@@ -27,7 +27,7 @@ export default function Home() {
   socket.on("message", (id)=> {
     console.log(id);
   })
-  socket.on("user:chat", ({text})=> {
+  socket.on("user:chat", ({text,room})=> {
     console.log(text,room);
     setMessage((message)=> [...message , text ])
   })
@@ -50,6 +50,7 @@ export default function Home() {
     socket.emit("join", room)
   }
 
+  console.log(message);
   return (
     <div className=" flex flex-col gap-5 m-8">
        <form onSubmit= {handleJoin} className=" flex   items-center justify-center  w-[100vw] flex-col gap-6" >
