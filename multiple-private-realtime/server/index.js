@@ -22,6 +22,10 @@ io.on("connect", (socket)=> {
   socket.on("chat", ({text, room})=> {
     io.emit("user:chat", {text,room})
   } )
+   socket.on("join", (room)=> {
+     socket.join(room)
+    console.log(room);
+   })
 })
 
 server.listen(5000, () => {
