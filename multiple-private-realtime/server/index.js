@@ -20,7 +20,7 @@ io.on("connect", (socket)=> {
   // console.log(socket.id);
   socket.emit("message", socket.id)
   socket.on("chat", ({text, room})=> {
-    io.emit("user:chat", {text,room})
+    io.to(room).emit("user:chat", {text})
   } )
    socket.on("join", (room)=> {
      socket.join(room)
