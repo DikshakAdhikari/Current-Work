@@ -20,12 +20,12 @@ io.on("connect", (socket)=> {
   // console.log(socket.id);
   socket.emit("message", socket.id)
   socket.on("chat", ({text, room})=> {
-    console.log(text);
+    // console.log(text);
     io.to(room).emit("user:chat", {text,room})
   } )
    socket.on("join", (room)=> {
      socket.join(room)
-    console.log(room);
+    // console.log(room);
    })
 })
 
