@@ -1,10 +1,14 @@
 const express = require('express')
 const {createServer} = require("http");
 const { Server } = require('socket.io');
+const userRouter = require('./routes/user');
+
 const PORT= 3000;
-const app= express()
-app.use(express())
+const app = express();
+app.use(express.json())
 const server= createServer(app)
+
+app.use('/user', userRouter)
 
 const io= new Server(server)
 
