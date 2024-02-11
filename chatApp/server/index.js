@@ -12,8 +12,9 @@ app.get('/', (req,res)=> {
     res.send('All set!')
 })
 
-io.on('connection', ()=> {
-    console.log('connected');
+io.on('connection', (socket)=> {
+    console.log(socket);
+    socket.emit("message", 'socket connected')
 })
 
 app.listen(PORT , ()=> {
