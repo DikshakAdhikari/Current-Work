@@ -1,6 +1,7 @@
 const express=  require('express')
 const { v4: uuidv4 } = require('uuid');
-const jwt= require('jsonwebtoken')
+const jwt= require('jsonwebtoken');
+const io = require('../index');
 let user= []
 const userRouter = express.Router()
 const secret= 'secret'
@@ -29,13 +30,13 @@ userRouter.post('/signin',(req,res)=> {
         user.map((val)=> {
             console.log(val.email, email);
             if(val.email === email){
-                console.log('ffff');
                 token= jwt.sign({id:val._id, username:val.username, email:val.email}, secret )
             }
         })
         if(!token){
             res.status(402).json("User not registered")
         }else{
+            console.log(io);
             res.json(token)
         }
 
@@ -44,8 +45,6 @@ userRouter.post('/signin',(req,res)=> {
     }
 
 })
-
-
 
 
 module.exports= userRouter
