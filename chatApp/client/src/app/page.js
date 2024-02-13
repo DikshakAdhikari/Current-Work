@@ -31,9 +31,9 @@ export default function Home() {
     }catch(err){
       console.log(err);
     }
-    
-
   }
+
+  
   return (
     <div>
       <form onSubmit={handleSubmit} className=" flex flex-col gap-4 items-center justify-center h-[80vh]">

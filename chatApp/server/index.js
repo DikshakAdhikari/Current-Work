@@ -21,6 +21,8 @@ app.get('/', (req,res)=> {
     res.send('All set!')
 })
 
+global.userInfo= new Map()
+
 io.on('connection', (socket)=> {
     console.log(socket);
     socket.emit("message", 'socket connected')
