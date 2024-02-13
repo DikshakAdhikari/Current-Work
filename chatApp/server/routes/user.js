@@ -18,7 +18,7 @@ userRouter.post('/',async(req,res)=> {
         const newUser= await USER.create({username, email, password});
         delete newUser.password
         console.log(newUser);
-        res.json(newUser)
+        res.json("user registered successfully")
 
     }catch(err){
         res.status(403).json(err)
