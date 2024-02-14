@@ -15,20 +15,29 @@ app.use(cors({
 connectDb()
 app.use('/user', userRouter)
 
-const io= new Server(server)
 
 app.get('/', (req,res)=> {
     res.send('All set!')
 })
 
-global.userInfo= new Map()
 
-io.on('connection', (socket)=> {
-    console.log(socket);
-    socket.emit("message", 'socket connected')
-})
 
 app.listen(PORT , ()=> {
     console.log('Server listening on port '+ PORT);
 });
 
+const io= new Server(server, {
+    cors:{
+        origin:"http://localhost:3001"
+    }
+})
+
+
+global.onlineUsers= new Map()
+
+io.on('connection', (socket)=> {
+    console.log(socket);
+    socket.on('add-user', (userId)=> {
+        onlineUsers.set(userId, socket.id)
+    });
+})
