@@ -25,7 +25,6 @@ const page = () => {
     socket.on("message", (id)=> {
       console.log(id);
     })
-
    
   },[socket])
     
