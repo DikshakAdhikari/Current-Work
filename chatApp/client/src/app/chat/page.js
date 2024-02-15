@@ -5,28 +5,20 @@ import io from 'socket.io-client'
 import { BASE_URL } from '../secret'
 
 const page = () => {
-  const [socket , setSocket]= useState(null)
+  const socket= useRef()
 
   useEffect(()=> {
-  const r= io(`${BASE_URL}`,{
-    withCredentials:true
-  });
-  setSocket(r)
-    
-  },[])
-
-  useEffect(()=> {
-    if(!socket){
-      return
-    }
-    socket.on("connection",()=> {
+     socket.current = io(`${BASE_URL}`,{
+      withCredentials:true
+    });
+    socket.current.on("connection",()=> {
       console.log(connected);
     })
-    socket.on("message", (id)=> {
+    socket.current.on("message", (id)=> {
       console.log(id);
-    })
-   
-  },[socket])
+    })   
+  },[])
+  
     
   return (
     <div className=' w-[100vw]'>
