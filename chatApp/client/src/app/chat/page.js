@@ -1,18 +1,23 @@
 "use client"
 import ChatNav from '@/components/ChatNav'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 
 const page = () => {
 
-  const socket= useRef()
+  const [socket , setSocket]= useState(null)
 
   useEffect(()=> {
-    socket.current= io('http://localhost:3000');
-    socket.current.on('connection', ()=> {
-      console.log('socket connected');
-    })
-  },[socket])
+  const r= io('http://localhost:3000');
+  setSocket(r)
+   
+  },[])
+
+  useEffect(()=> {
+    if(!socket){
+      
+    }
+  })
     
   return (
     <div className=' w-[100vw]'>
