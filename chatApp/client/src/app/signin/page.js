@@ -1,6 +1,7 @@
 "use client"
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { BASE_URL } from '../secret'
 
 const page = () => {
     const [email, setEmail]= useState('')
@@ -9,7 +10,7 @@ const page = () => {
     const handleSubmit= async(e)=> {
         e.preventDefault();
         try{
-            const res= await fetch('http://localhost:3000/user/signin', {
+            const res= await fetch(`${BASE_URL}/user/signin`, {
                 method:"POST",
                 headers:{
                   'Content-Type':"application/json",

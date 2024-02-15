@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BASE_URL } from "./secret";
 
 export default function Home() {
   const [username, setUsername]= useState('')
@@ -12,7 +13,7 @@ export default function Home() {
   const handleSubmit= async(e)=> {
     e.preventDefault();
     try{
-      const res= await fetch('http://localhost:3000/user/', {
+      const res= await fetch(`${BASE_URL}/user/`, {
         method:"POST",
         headers:{
           'Content-Type':"application/json",

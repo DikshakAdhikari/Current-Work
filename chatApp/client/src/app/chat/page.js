@@ -2,22 +2,32 @@
 import ChatNav from '@/components/ChatNav'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
+import { BASE_URL } from '../secret'
 
 const page = () => {
-
   const [socket , setSocket]= useState(null)
 
   useEffect(()=> {
-  const r= io('http://localhost:3000');
+  const r= io(`${BASE_URL}`,{
+    withCredentials:true
+  });
   setSocket(r)
-   
+    
   },[])
 
   useEffect(()=> {
     if(!socket){
-      
+      return
     }
-  })
+    socket.on("connection",()=> {
+      console.log(connected);
+    })
+    socket.on("message", (id)=> {
+      console.log(id);
+    })
+
+   
+  },[socket])
     
   return (
     <div className=' w-[100vw]'>
