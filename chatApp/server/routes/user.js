@@ -17,7 +17,7 @@ userRouter.post('/',async(req,res)=> {
         }
         const newUser= await USER.create({username, email, password});
         delete newUser.password
-        console.log(newUser);
+       // console.log(newUser);
         res.json("user registered successfully")
 
     }catch(err){
@@ -33,10 +33,22 @@ userRouter.post('/signin',async(req,res)=> {
             res.status(403).json("User not registered!")
         }
         const token= jwt.sign({id:user._id, username:user.username, email:user.email}, secret ) 
-        res.json({username:user.username, email:user.email, token})
+        res.json({id:user._id, username:user.username, email:user.email, token})
 
     }catch(err){
         res.status(403).json(err)
+    }
+})
+
+userRouter.get('/all/:userId', async(req,res)=> {
+    try{
+        console.log(req.params.userId);
+        const users= await USER.find({ _id: { $ne: req.params.userId } }).select([
+            "email", "username","_id"
+        ])
+        res.json(users)
+    }catch(err){
+        res.json(err)
     }
 })
 

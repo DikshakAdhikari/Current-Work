@@ -42,8 +42,10 @@ io.on('connection', (socket)=> {
     //console.log(socket);
     socket.emit("message", socket.id)
     socket.on('add-user', (userId)=> {
+        console.log(socket.id);
         onlineUsers.set(userId, socket.id)
     });
+  
 })
 
 

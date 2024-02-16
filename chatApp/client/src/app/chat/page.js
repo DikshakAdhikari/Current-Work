@@ -11,12 +11,13 @@ const page = () => {
      socket.current = io(`${BASE_URL}`,{
       withCredentials:true
     });
-    socket.current.on("connection",()=> {
-      console.log(connected);
-    })
+   
     socket.current.on("message", (id)=> {
-      console.log(id);
-    })   
+      // console.log(id);
+    }) 
+    const {id}= JSON.parse(localStorage.getItem('token'))
+    console.log(id);
+    socket.current.emit("add-user", id )
   },[])
   
     
@@ -25,10 +26,9 @@ const page = () => {
       <ChatNav />
       <div className=' h-[93vh] w-[100vw] flex'>
         <div className=' border-r-4 border-gray-300 w-[20vw] '>
-
         </div>
         <div className=' border-r-4 bg-black w-[100vw] border-gray-300  '>
-fd
+            fd
         </div>
       </div>
     </div>
