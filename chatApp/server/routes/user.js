@@ -9,15 +9,15 @@ const secret= 'secret'
 userRouter.post('/',async(req,res)=> {
     try{
         const {username, email, password}= req.body;
-        console.log(username,email,password);
+  
         const user= await USER.findOne({username, email});
-        console.log(user);
+    
         if(user){
             return res.json.status(400).json('user already registered')
         }
         const newUser= await USER.create({username, email, password});
         delete newUser.password
-       // console.log(newUser);
+
         res.json("user registered successfully")
 
     }catch(err){
@@ -42,7 +42,6 @@ userRouter.post('/signin',async(req,res)=> {
 
 userRouter.get('/all/:userId', async(req,res)=> {
     try{
-        console.log(req.params.userId);
         const users= await USER.find({ _id: { $ne: req.params.userId } }).select([
             "email", "username","_id"
         ])

@@ -7,6 +7,7 @@ import { BASE_URL } from '../secret'
 const page = () => {
   const socket= useRef()
   const [contacts, setContacts]= useState([])
+  const [contactUserId, setContactUserId]= useState()
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       withCredentials:true
@@ -54,11 +55,11 @@ const page = () => {
             <div>
               {
                 contacts.map((val,index)=> (
-                  <div key={val._id}> 
+                  <div onClick={()=> setContactUserId(val._id)} className=' cursor-pointer hover:text-yellow-500 my-3' key={val._id}> 
                       <div> {val.username} </div>
                   </div>
                 ))
-              }
+               }
             </div>
            }
         </div>
