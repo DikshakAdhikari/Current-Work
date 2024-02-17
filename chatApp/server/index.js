@@ -3,7 +3,8 @@ const {createServer} = require("http");
 const socket = require('socket.io');
 const userRouter = require('./routes/user');
 const connectDb = require('./connection/connect');
-const cors= require('cors')
+const cors= require('cors');
+const chatRouter = require('./routes/chat');
 
 const PORT= 5000;
 const app = express();
@@ -15,7 +16,7 @@ app.use(cors({
 }))
 connectDb()
 app.use('/user', userRouter)
-
+app.use('/chat', chatRouter )
 
 app.get('/', (req,res)=> {
     res.send('All set!')
