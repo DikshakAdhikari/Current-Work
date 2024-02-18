@@ -46,9 +46,26 @@ const page = () => {
 
   const handleSubmit = async(e)=> {
     e.preventDefault();
+    const {id}= JSON.parse(localStorage.getItem('token'))
     try{
       socket.current.emit("send-chat",{text, contactUserId});
-      // const res= await fetch(`${BASE_URL}/`)
+       const res= await fetch(`${BASE_URL}/chat`, {
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          from: id,
+          to: contactUserId,
+          message: text
+        })
+       });
+       
+       if(!res.ok){
+        throw new Error('Network problem!');
+       }
+       const data= await res.json();
+       console.log(data);
     }catch(err){
       console.log(err);
     }

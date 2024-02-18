@@ -36,8 +36,7 @@ const io= socket(serverr, {
     }
 })
 
-
-let onlineUsers= new Map()
+global.onlineUsers= new Map()
 
 io.on('connection', (socket)=> {
     //console.log(socket);
@@ -48,12 +47,11 @@ io.on('connection', (socket)=> {
         onlineUsers.set(userId, socket.id)
     });
   socket.on('send-chat', ({text, contactUserId})=> {
-    const sendUserSocketId = onlineUsers.get(contactUserId);
-    console.log(sendUserSocketId);
+    const sendUserSocketId = global.onlineUsers.get(contactUserId);
+    console.log('contactSocketId', sendUserSocketId);
     if(sendUserSocketId){
         socket.to(sendUserSocketId).emit(text);
     }  
   })
 })
-
 
