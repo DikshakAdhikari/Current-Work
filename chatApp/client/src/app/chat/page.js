@@ -46,7 +46,7 @@ const page = () => {
 
   useEffect(()=> {
     const {id}= JSON.parse(localStorage.getItem('token'))
-    console.log('pppppppppppp', id, contactUserId);
+    // console.log('pppppppppppp', id, contactUserId);
     const fun = async()=> {
       const res= await fetch(`${BASE_URL}/chat/getChats`,{
         method:"POST",
@@ -63,7 +63,7 @@ const page = () => {
         throw new Error("Network problem!");
       }
       const data= await res.json();
-      console.log(data);
+      console.log('heyyyy',data);
     }
     fun();
   },[contactUserId])
