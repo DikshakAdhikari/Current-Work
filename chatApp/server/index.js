@@ -48,8 +48,9 @@ io.on('connection', (socket)=> {
     });
   socket.on('send-chat', ({text, contactUserId})=> {
     const sendUserSocketId = global.onlineUsers.get(contactUserId);
-    console.log('contactSocketId', sendUserSocketId);
+    console.log(global.onlineUsers);
     if(sendUserSocketId){
+        console.log('ggggggggg', sendUserSocketId);
         socket.to(sendUserSocketId).emit(text);
     }  
   })
