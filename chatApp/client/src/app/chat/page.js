@@ -42,12 +42,12 @@ const page = () => {
       }
     }
     fun()
-  });
+  },[]);
 
   const handleSubmit = async(e)=> {
     e.preventDefault();
     try{
-      socket.current.emit(text);
+      socket.current.emit("send-chat",{text, contactUserId});
       // const res= await fetch(`${BASE_URL}/`)
     }catch(err){
       console.log(err);

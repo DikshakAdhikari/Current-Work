@@ -24,7 +24,7 @@ app.get('/', (req,res)=> {
 
 
  const serverr= app.listen(PORT , ()=> {
-    console.log('Server listening on port '+ PORT);
+    console.log('Server listening on port '+ PORT); 
 });
 
 
@@ -37,16 +37,23 @@ const io= socket(serverr, {
 })
 
 
-global.onlineUsers= new Map()
+let onlineUsers= new Map()
 
 io.on('connection', (socket)=> {
     //console.log(socket);
     socket.emit("message", socket.id)
+    global.chatSocket = socket;
     socket.on('add-user', (userId)=> {
-        console.log(socket.id);
+        console.log(userId,socket.id);
         onlineUsers.set(userId, socket.id)
     });
-  
+  socket.on('send-chat', ({text, contactUserId})=> {
+    const sendUserSocketId = onlineUsers.get(contactUserId);
+    console.log(sendUserSocketId);
+    if(sendUserSocketId){
+        socket.to(sendUserSocketId).emit(text);
+    }  
+  })
 })
 
 
