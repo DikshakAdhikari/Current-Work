@@ -6,7 +6,6 @@ const chatRouter= express.Router()
 chatRouter.post('/getChats', async(req,res)=> {
     try{
         const {from, to}= req.body;
-        console.log( 'from, to ->', typeof(from), typeof(to));
         const data= await CHAT.find({
             users:{
             $all:[from, to]
