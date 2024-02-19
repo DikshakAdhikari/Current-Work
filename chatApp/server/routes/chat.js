@@ -11,7 +11,7 @@ chatRouter.post('/getChats', async(req,res)=> {
             $all:[from, to]
             }
         })
-        console.log(data);
+        //console.log(data);
         res.json(data)
     }catch(err){
         res.json({message:err})

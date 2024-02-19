@@ -13,7 +13,7 @@ const server= createServer(app)
 app.use(cors({
     origin:"http://localhost:3000",
     credentials:true
-}))
+}));
 connectDb()
 app.use('/user', userRouter)
 app.use('/chat', chatRouter )
@@ -21,7 +21,6 @@ app.use('/chat', chatRouter )
 app.get('/', (req,res)=> {
     res.send('All set!')
 })
-
 
  const serverr= app.listen(PORT , ()=> {
     console.log('Server listening on port '+ PORT); 
@@ -39,18 +38,15 @@ const io= socket(serverr, {
 global.onlineUsers= new Map()
 
 io.on('connection', (socket)=> {
-    //console.log(socket);
     socket.emit("message", socket.id)
     global.chatSocket = socket;
     socket.on('add-user', (userId)=> {
-        console.log(userId,socket.id);
         onlineUsers.set(userId, socket.id)
     });
   socket.on('send-chat', ({text, contactUserId})=> {
     const sendUserSocketId = global.onlineUsers.get(contactUserId);
     console.log(global.onlineUsers);
     if(sendUserSocketId){
-        console.log('ggggggggg', sendUserSocketId);
         socket.to(sendUserSocketId).emit(text);
     }  
   })
