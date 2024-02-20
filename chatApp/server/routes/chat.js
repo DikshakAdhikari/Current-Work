@@ -20,7 +20,7 @@ chatRouter.post('/getChats', async(req,res)=> {
 
 chatRouter.post('/' , async(req,res)=> {
     const {from, to, message} = req.body;
-    // console.log(global.onlineUsers);
+     console.log(global.onlineUsers);
     try{
         const postChat= await CHAT.create({
             chat: {

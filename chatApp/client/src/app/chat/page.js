@@ -8,7 +8,8 @@ const page = () => {
   const socket= useRef()
   const [contacts, setContacts]= useState([])
   const [contactUserId, setContactUserId]= useState()
-  const [text, setText]= useState('')
+  const [text, setText]= useState('');
+  const [messages, setMessages]= useState([])
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       withCredentials:true
@@ -64,6 +65,7 @@ const page = () => {
       }
       const data= await res.json();
       console.log('heyyyy',data);
+      setMessages(data)
     }
     fun();
   },[contactUserId])
@@ -115,7 +117,9 @@ const page = () => {
             </div>
            }
         </div>
+        
         <div className=' border-r-4 bg-black w-[100vw]  p-4 border-gray-300  '>
+           
           <form onSubmit={handleSubmit} className=' flex gap-3'>
             <input onChange={(e)=> setText(e.target.value)} className=' outline-none rounded-md text-black w-[60vw] p-3' />
             <button type='submit' className=' bg-cyan-500 p-3 px-5 rounded-md'>SEND</button>
