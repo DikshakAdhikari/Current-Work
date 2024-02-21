@@ -19,6 +19,7 @@ chatRouter.post('/getChats', async(req,res)=> {
 });
 
 chatRouter.post('/' , async(req,res)=> {
+    //post 
     const {from, to, message} = req.body;
      console.log(global.onlineUsers);
     try{
