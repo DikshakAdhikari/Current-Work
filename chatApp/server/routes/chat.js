@@ -10,9 +10,23 @@ chatRouter.post('/getChats', async(req,res)=> {
             users:{
             $all:[from, to]
             }
-        })
-        //console.log(data);
-        res.json(data)
+        }).sort({ updatedAt: 1 });
+        
+        let chats= []
+        data.map((val)=> {
+            const obj={};
+            // console.log('senderrrr', val.sender.toString());
+            obj.chat= val.chat.text;
+            if(val.sender.toString() === from){
+                obj.userSend=true;
+            }else{
+                obj.userSend=false;
+            }  
+            chats.push(obj);  
+        });
+        console.log(chats);
+
+        res.json(chats)
     }catch(err){
         res.json({message:err})
     }
