@@ -10,6 +10,7 @@ const page = () => {
   const [contactUserId, setContactUserId]= useState()
   const [text, setText]= useState('');
   const [messages, setMessages]= useState([])
+  const [toggle, setToggle]= useState(false)
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       withCredentials:true
@@ -66,9 +67,11 @@ const page = () => {
       const data= await res.json();
       console.log('heyyyy',data);
       setMessages(data)
+      setToggle(false)
     }
     fun();
-  },[contactUserId])
+  },[ toggle || contactUserId])
+
 
   const handleSubmit = async(e)=> {
     e.preventDefault();
@@ -91,7 +94,8 @@ const page = () => {
         throw new Error('Network problem!');
        }
        const data= await res.json();
-       console.log(data);
+       setToggle(true)
+     
     }catch(err){
       console.log(err);
     }
@@ -119,7 +123,23 @@ const page = () => {
         </div>
         
         <div className=' border-r-4 bg-black w-[100vw]  p-4 border-gray-300  '>
-           
+           {messages.map((val,index)=> (
+            <div key={index}>
+              {
+                val.userSend ?
+                <div className= " bg-blue-600 text-white">
+                  {
+                    val.chat
+                  }
+                </div> :
+                <div className=" bg-green-500 text-white">
+                  {
+                    val.chat
+                  }
+                </div>
+              }
+            </div>
+           ))}
           <form onSubmit={handleSubmit} className=' flex gap-3'>
             <input onChange={(e)=> setText(e.target.value)} className=' outline-none rounded-md text-black w-[60vw] p-3' />
             <button type='submit' className=' bg-cyan-500 p-3 px-5 rounded-md'>SEND</button>
