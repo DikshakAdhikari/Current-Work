@@ -11,18 +11,26 @@ const page = () => {
   const [text, setText]= useState('');
   const [messages, setMessages]= useState([])
   const [toggle, setToggle]= useState(false)
+  const [recievedMessage, setRecievedMessage]= useState({})
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       withCredentials:true
     });
-   
-    socket.current.on("message", (id)=> {
-      // console.log(id);
-    }) 
+ 
+    socket.current.on("recieve-chat", text => {
+      setRecievedMessage({userSend:false , chat:text})
+    } )
     const {id}= JSON.parse(localStorage.getItem('token'))
     console.log(id);
     socket.current.emit("add-user", id )
   },[]);
+
+  useEffect(()=> {
+    setMessages((prev)=> 
+      [...prev, recievedMessage]
+    )
+  },[recievedMessage])
+
 
   useEffect(()=> {
     const fun = async ()=> {
@@ -123,7 +131,7 @@ const page = () => {
         </div>
         
         <div className=' border-r-4 bg-black w-[100vw]  p-4 border-gray-300  '>
-           {messages.map((val,index)=> (
+           {messages?.map((val,index)=> (
             <div key={index}>
               {
                 val.userSend ?
