@@ -12,6 +12,10 @@ const ChatSchema= new mongoose.Schema({
      type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: true,
+    },
+    seen: {
+        type:Boolean,
+        required:true
     }
 },{timestamps:true});
 

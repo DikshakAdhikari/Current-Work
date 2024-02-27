@@ -24,7 +24,6 @@ chatRouter.post('/getChats', async(req,res)=> {
             }  
             chats.push(obj);  
         });
-        console.log(chats);
 
         res.json(chats)
     }catch(err){
@@ -35,14 +34,14 @@ chatRouter.post('/getChats', async(req,res)=> {
 chatRouter.post('/' , async(req,res)=> {
     //post 
     const {from, to, message} = req.body;
-     console.log(global.onlineUsers);
     try{
         const postChat= await CHAT.create({
             chat: {
                 text:message
             },
             users: [from, to],
-            sender:from
+            sender:from,
+            seen:false
         });
         await postChat.save()
         res.json({message:'Chat saved successfully!'})
@@ -50,5 +49,15 @@ chatRouter.post('/' , async(req,res)=> {
         res.json(err)
     }
 });
+
+chatRouter.put('/seen/:userId', async(req,res)=> {
+    try{
+        const chatting= await CHAT.findOneAndUpdate({sender:req.params.userId},{seen:true});
+        console.log(chatting);
+
+    }catch(err){
+        res.json(err);
+    }
+})
 
 module.exports= chatRouter

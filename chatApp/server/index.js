@@ -45,10 +45,10 @@ io.on('connection', (socket)=> {
     });
   socket.on('send-chat', ({text, contactUserId})=> {
     const sendUserSocketId = global.onlineUsers.get(contactUserId);
-    console.log(global.onlineUsers);
+    // console.log(global.onlineUsers);
     if(sendUserSocketId){
         socket.to(sendUserSocketId).emit("recieve-chat",text);
     }  
   })
-})
+});
 

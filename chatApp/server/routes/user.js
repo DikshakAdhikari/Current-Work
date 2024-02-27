@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const jwt= require('jsonwebtoken');
 const io = require('../index');
 const USER = require('../models/user');
+const CHAT = require('../models/chat');
 let user= []
 const userRouter = express.Router()
 const secret= 'secret'
@@ -11,7 +12,7 @@ userRouter.post('/',async(req,res)=> {
         const {username, email, password}= req.body;
   
         const user= await USER.findOne({username, email});
-    
+        
         if(user){
             return res.json.status(400).json('user already registered')
         }
@@ -30,7 +31,7 @@ userRouter.post('/signin',async(req,res)=> {
         const { email, password}= req.body;
         const user= await USER.findOne({email});
         if(!user){
-            res.status(403).json("User not registered!")
+            return res.status(403).json("User not registered!")
         }
         const token= jwt.sign({id:user._id, username:user.username, email:user.email}, secret ) 
         res.json({id:user._id, username:user.username, email:user.email, token})
@@ -45,12 +46,19 @@ userRouter.get('/all/:userId', async(req,res)=> {
         const users= await USER.find({ _id: { $ne: req.params.userId } }).select([
             "email", "username","_id"
         ])
+        const chats=[]
+        users.map(async(val)=> {
+            const userId = val._id.toString();
+            const userChats= await CHAT.find({sender:userId})
+            const length= userChats.length
+            chats.push(userChats)
+        });
+        console.log(chats);
         res.json(users)
     }catch(err){
         res.json(err)
     }
-})
-
+});
 
 
 
