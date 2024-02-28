@@ -31,21 +31,31 @@ const io= socket(serverr, {
     cors:{
         origin:"http://localhost:3000",
         credentials:true
-    
     }
 })
 
 global.onlineUsers= new Map()
+let online= new Map()
 
-io.on('connection', (socket)=> {
+const users= []
+io.on('connection', async (socket)=> {
+    console.log('connected');
     socket.emit("message", socket.id)
     global.chatSocket = socket;
-    socket.on('add-user', (userId)=> {
-        onlineUsers.set(userId, socket.id)
+    socket.on('add-user', async(userId)=> {
+        console.log(userId);
+        // global.onlineUsers.set(userId, socket.id)
+    online.set(socket.id, userId)
     });
+
+    socket.on('disconnect', ()=> {
+        // global.online.delete(socket.id);
+        console.log('Socket connection closed');
+    })
+
+    io.emit('onlines', online)
   socket.on('send-chat', ({text, contactUserId})=> {
     const sendUserSocketId = global.onlineUsers.get(contactUserId);
-    // console.log(global.onlineUsers);
     if(sendUserSocketId){
         socket.to(sendUserSocketId).emit("recieve-chat",text);
     }  

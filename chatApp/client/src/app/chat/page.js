@@ -19,11 +19,19 @@ const page = () => {
  
     socket.current.on("recieve-chat", text => {
       setRecievedMessage({userSend:false , chat:text})
-    } )
+    });
     const {id}= JSON.parse(localStorage.getItem('token'))
-    console.log(id);
+    //console.log(id);
     socket.current.emit("add-user", id )
-  },[]);
+   
+    socket.current.on('disconnect', ()=> {
+      console.log('Socket connection closed');
+    })
+
+    return ()=> {
+      socket.current.close()
+    }
+  },[socket]);
 
   useEffect(()=> {
     setMessages((prev)=> 
@@ -31,7 +39,11 @@ const page = () => {
     )
   },[recievedMessage])
 
-
+  useEffect(()=> {
+    socket.current.on("onlines", online => {
+      console.log('yyyy',online);
+    } )
+  },[socket])
   useEffect(()=> {
     const fun = async ()=> {
       try{
@@ -46,13 +58,15 @@ const page = () => {
           throw new Error("Network Error!");
         }
         const data= await res.json();
+        console.log(data);
         setContacts(data)
       }catch(err){
         console.log(err);
       }
     }
     fun()
-  },[]);
+   
+  },[socket]);
 
   useEffect(()=> {
     const {id}= JSON.parse(localStorage.getItem('token'))
@@ -73,7 +87,7 @@ const page = () => {
         throw new Error("Network problem!");
       }
       const data= await res.json();
-      console.log('heyyyy',data);
+
       setMessages(data)
       setToggle(false)
     }
@@ -116,13 +130,14 @@ const page = () => {
       <div className=' h-[93vh] w-[100vw] flex'>
         <div className=' border-r-4 border-gray-300 p-3 w-[20vw] '>
           {
-            contacts.length === 0 ?
+            contacts?.senders?.length === 0 ?
             <div>No contacts available</div> :
             <div>
               {
-                contacts.map((val,index)=> (
-                  <div onClick={()=> setContactUserId(val._id)} className=' cursor-pointer hover:text-yellow-500 my-3' key={val._id}> 
-                      <div> {val.username} </div>
+                contacts?.map((val,index)=> (
+                  <div  className=' cursor-pointer flex gap-3 hover:text-yellow-500 my-3' key={val._id}> 
+                      <div onClick={()=> setContactUserId(val.val._id)}> {val.val.username} </div>
+                      <div> {val.senderToUserChatsCount} </div>
                   </div>
                 ))
                }
