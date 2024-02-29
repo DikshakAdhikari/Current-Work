@@ -34,8 +34,8 @@ const io= socket(serverr, {
     }
 })
 
-global.onlineUsers= new Map()
-let online= new Map()
+let onlineUsers= new Map()
+
 
 const users= []
 io.on('connection', async (socket)=> {
@@ -43,17 +43,21 @@ io.on('connection', async (socket)=> {
     socket.emit("message", socket.id)
     global.chatSocket = socket;
     socket.on('add-user', async(userId)=> {
-        console.log(userId);
         // global.onlineUsers.set(userId, socket.id)
-    online.set(socket.id, userId)
+        users.push(userId)
+        
     });
-
+    io.emit('onlines', users)
     socket.on('disconnect', ()=> {
-        // global.online.delete(socket.id);
+        onlineUsers.delete(socket.id);
+        for (let [key, value] of onlineUsers) {
+            users.push(value)
+        }
+        
         console.log('Socket connection closed');
     })
 
-    io.emit('onlines', online)
+   
   socket.on('send-chat', ({text, contactUserId})=> {
     const sendUserSocketId = global.onlineUsers.get(contactUserId);
     if(sendUserSocketId){

@@ -31,7 +31,7 @@ const page = () => {
     return ()=> {
       socket.current.close()
     }
-  },[socket]);
+  },[]);
 
   useEffect(()=> {
     setMessages((prev)=> 
@@ -40,8 +40,8 @@ const page = () => {
   },[recievedMessage])
 
   useEffect(()=> {
-    socket.current.on("onlines", online => {
-      console.log('yyyy',online);
+    socket.current.on("onlines", users => {
+      console.log('yyyy',users);
     } )
   },[socket])
   useEffect(()=> {
@@ -135,7 +135,7 @@ const page = () => {
             <div>
               {
                 contacts?.map((val,index)=> (
-                  <div  className=' cursor-pointer flex gap-3 hover:text-yellow-500 my-3' key={val._id}> 
+                  <div  className=' cursor-pointer flex gap-3 hover:text-yellow-500 my-3' key={index}> 
                       <div onClick={()=> setContactUserId(val.val._id)}> {val.val.username} </div>
                       <div> {val.senderToUserChatsCount} </div>
                   </div>
