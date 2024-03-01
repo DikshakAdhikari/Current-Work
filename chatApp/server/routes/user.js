@@ -41,12 +41,13 @@ userRouter.post('/signin',async(req,res)=> {
     }
 })
 
+
 userRouter.get('/all/:userId', async(req,res)=> {
     try{
         const senders= await USER.find({ _id: { $ne: req.params.userId } }).select([
             "email", "username","_id"
         ]);
-        console.log('posttttt', global.online);
+        // console.log('posttttt', global.online);
         let chatArray= []
         const chats = await Promise.all(senders.map(async (val) => {
             const senderId = val._id.toString();
