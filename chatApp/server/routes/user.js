@@ -56,7 +56,7 @@ userRouter.get('/all/:userId', async(req,res)=> {
             const senderToUserChatsCount = await CHAT.find({ users: [senderId, req.params.userId] }).count();
             chatArray.push({val , senderToUserChatsCount})
         }));
-        // console.log(chatArray);
+        console.log(chatArray);
         res.json(chatArray)
     }catch(err){
         res.json(err)
