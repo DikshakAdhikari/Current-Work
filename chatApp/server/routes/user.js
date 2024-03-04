@@ -62,7 +62,7 @@ userRouter.get('/all/:userId', async(req,res)=> {
         res.json(err)
     }
 });
-
+//val
 // userRouter.get()
 
 module.exports= userRouter
