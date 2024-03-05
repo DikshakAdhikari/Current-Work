@@ -4,6 +4,7 @@ const jwt= require('jsonwebtoken');
 const io = require('../index');
 const USER = require('../models/user');
 const CHAT = require('../models/chat');
+const verifyToken = require('../services/auth');
 let user= []
 const userRouter = express.Router()
 const secret= 'secret'
@@ -12,14 +13,16 @@ userRouter.post('/',async(req,res)=> {
         const {username, email, password}= req.body;
   
         const user= await USER.findOne({username, email});
-        
+    
         if(user){
             return res.json.status(400).json('user already registered')
         }
-        const newUser= await USER.create({username, email, password});
+        const newUser= await USER.create({username, email, password, online:false});
+        await newUser.save()
         delete newUser.password
-
-        res.json("user registered successfully")
+        // const token = jwt.sign({username, email}, "secret")
+        // console.log(token);
+        res.json("User signed up successfully!")
 
     }catch(err){
         res.status(403).json(err)
@@ -33,8 +36,8 @@ userRouter.post('/signin',async(req,res)=> {
         if(!user){
             return res.status(403).json("User not registered!")
         }
-        const token= jwt.sign({id:user._id, username:user.username, email:user.email}, secret ) 
-        res.json({id:user._id, username:user.username, email:user.email, token})
+        const token= jwt.sign({id:user._id, username:user.username, email:user.email}, "secret" ) 
+        res.json({token, userId:user._id})
 
     }catch(err){
         res.status(403).json(err)
@@ -42,7 +45,7 @@ userRouter.post('/signin',async(req,res)=> {
 })
 
 
-userRouter.get('/all/:userId', async(req,res)=> {
+userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
     try{
         const senders= await USER.find({ _id: { $ne: req.params.userId } }).select([
             "email", "username","_id"
@@ -56,13 +59,13 @@ userRouter.get('/all/:userId', async(req,res)=> {
             const senderToUserChatsCount = await CHAT.find({ users: [senderId, req.params.userId] }).count();
             chatArray.push({val , senderToUserChatsCount})
         }));
-        console.log(chatArray);
+        // console.log(chatArray);
         res.json(chatArray)
     }catch(err){
         res.json(err)
     }
 });
-//val
+
 // userRouter.get()
 
 module.exports= userRouter

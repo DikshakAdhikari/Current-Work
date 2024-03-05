@@ -35,7 +35,7 @@ const io= socket(serverr, {
 })
 
 let onlineUsers= new Map()
-
+global.onlineUsers= new Map()
 
 const users= []
 io.on('connection', async (socket)=> {
@@ -43,12 +43,14 @@ io.on('connection', async (socket)=> {
     socket.emit("message", socket.id)
     global.chatSocket = socket;
     socket.on('add-user', async(userId)=> {
-        // global.onlineUsers.set(userId, socket.id)
+        // console.log(userId);
+        global.onlineUsers.set(userId, socket.id)
         users.push(userId)
         
     });
     io.emit('onlines', users)
     socket.on('disconnect', ()=> {
+    
         onlineUsers.delete(socket.id);
         for (let [key, value] of onlineUsers) {
             users.push(value)
