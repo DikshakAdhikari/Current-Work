@@ -45,13 +45,14 @@ io.use((socket, next)=> {
             return next(new Error("Authentication error"));
         }
         socket.username= payload.username;
+        socket.userId= payload.id
         next()
     })
 })
 
 global.onlineUsers= new Map()
 
-const users= []
+let users= []
 io.on('connection', async (socket)=> {
     console.log('connected');
     socket.emit("message", socket.id)
@@ -59,17 +60,17 @@ io.on('connection', async (socket)=> {
     socket.on('add-user', async(userId)=> {
         // console.log(userId);
         global.onlineUsers.set(userId, socket.id)
-        users.push(userId)
-        
+        users.push({
+            userId:socket.userId,
+            socketId: socket.id
+        }); 
+        socket.emit("get-status", users)
     });
-    io.emit('onlines', users)
+
+   
     socket.on('disconnect', ()=> {
-    
-        onlineUsers.delete(socket.id);
-        for (let [key, value] of onlineUsers) {
-            users.push(value)
-        }
-        
+        const filteredUsers= users.filter((val)=> val.socketId !== socket.id);
+        socket.emit("get-status", filteredUsers)
         console.log('Socket connection closed');
     })
 

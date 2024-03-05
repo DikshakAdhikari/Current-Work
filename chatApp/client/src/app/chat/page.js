@@ -40,7 +40,7 @@ const page = () => {
   },[recievedMessage])
 
   useEffect(()=> {
-    socket.current.on("onlines", users => {
+    socket.current.on("get-status", users => {
       console.log('yyyy',users);
     } )
   },[socket])
