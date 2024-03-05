@@ -5,6 +5,7 @@ const userRouter = require('./routes/user');
 const connectDb = require('./connection/connect');
 const cors= require('cors');
 const chatRouter = require('./routes/chat');
+const jwt= require("jsonwebtoken")
 
 const PORT= 5000;
 const app = express();
@@ -34,7 +35,20 @@ const io= socket(serverr, {
     }
 })
 
-let onlineUsers= new Map()
+io.use((socket, next)=> {
+    const token=  socket.handshake.auth.token;
+    if(!token){
+        return next(new Error("Authentication error"));
+    }
+    jwt.verify(token, "secret", (err, payload)=> {
+        if(err){
+            return next(new Error("Authentication error"));
+        }
+        socket.username= payload.username;
+        next()
+    })
+})
+
 global.onlineUsers= new Map()
 
 const users= []

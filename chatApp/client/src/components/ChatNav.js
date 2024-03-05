@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const ChatNav = () => {
     const [getUsername, setUsername]= useState('')
     useEffect(()=> {
-        const user= JSON.parse(localStorage.getItem('token'))
+        const user= localStorage.getItem('token')
         setUsername(user.username)
     },[])
   return (

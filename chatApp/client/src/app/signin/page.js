@@ -23,7 +23,9 @@ const page = () => {
                 throw new Error("Network problem")
               }
               const data= await res.json();
-              localStorage.setItem('token', JSON.stringify(data))
+              console.log(data);
+              localStorage.setItem('token', data.token)
+              localStorage.setItem('userId', data.userId)
               router.push('/chat')
               
         }catch(err){

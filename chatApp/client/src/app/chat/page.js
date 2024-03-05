@@ -14,13 +14,13 @@ const page = () => {
   const [recievedMessage, setRecievedMessage]= useState({})
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
-      withCredentials:true
+      auth:{token: localStorage.getItem('token')}
     });
  
     socket.current.on("recieve-chat", text => {
       setRecievedMessage({userSend:false , chat:text})
     });
-    const {id}= JSON.parse(localStorage.getItem('token'))
+    const id = localStorage.getItem('userId')
     //console.log(id);
     socket.current.emit("add-user", id )
    
@@ -47,11 +47,14 @@ const page = () => {
   useEffect(()=> {
     const fun = async ()=> {
       try{
-        const {id}= JSON.parse(localStorage.getItem('token'))
+        const token= localStorage.getItem('token')
+        const id= localStorage.getItem('userId')
+        console.log('iddddd', id);
         const res= await fetch(`${BASE_URL}/user/all/${id}`,{
           method:"GET",
           headers:{
-            'Content-Type': "application/json"
+            'Content-Type': "application/json",
+            'authorization': token
           }
         });
         if(!res.ok){
@@ -69,7 +72,7 @@ const page = () => {
   },[socket]);
 
   useEffect(()=> {
-    const {id}= JSON.parse(localStorage.getItem('token'))
+    const id= localStorage.getItem('userId')
     // console.log('pppppppppppp', id, contactUserId);
     const fun = async()=> {
       const res= await fetch(`${BASE_URL}/chat/getChats`,{
@@ -97,7 +100,8 @@ const page = () => {
 
   const handleSubmit = async(e)=> {
     e.preventDefault();
-    const {id}= JSON.parse(localStorage.getItem('token'))
+    const id= localStorage.getItem('userId')
+    console.log(id, contactUserId, text);
     try{
       socket.current.emit("send-chat",{text, contactUserId});
        const res= await fetch(`${BASE_URL}/chat`, {
