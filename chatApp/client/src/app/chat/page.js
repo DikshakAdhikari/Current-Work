@@ -155,9 +155,7 @@ const page = () => {
                       <div>
 
                       {checkOnlineUser(val.val._id) ? "Online" : "Offline"}
-                      </div>
-
-                      
+                      </div>       
                   </div>
                 ))
                }
