@@ -12,6 +12,7 @@ const page = () => {
   const [messages, setMessages]= useState([])
   const [toggle, setToggle]= useState(false)
   const [recievedMessage, setRecievedMessage]= useState({})
+  const [activeUsers, setActiveUsers]= useState([])
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       auth:{token: localStorage.getItem('token')}
@@ -39,11 +40,14 @@ const page = () => {
     )
   },[recievedMessage])
 
+
   useEffect(()=> {
     socket.current.on("get-status", users => {
       console.log('yyyy',users);
+      setActiveUsers(users)
     } )
-  },[socket])
+  },[socket]);
+
   useEffect(()=> {
     const fun = async ()=> {
       try{
@@ -127,7 +131,13 @@ const page = () => {
     }
   }
   
-    
+    console.log('jim',contacts);
+    const checkOnlineUser = (id)=> {
+      console.log('bingg',id);
+      const res= activeUsers.some((val)=> val.userId === id)
+      console.log(res);
+      return res
+    }
   return (
     <div className=' w-[100vw]'>
       <ChatNav />
@@ -139,9 +149,15 @@ const page = () => {
             <div>
               {
                 contacts?.map((val,index)=> (
-                  <div  className=' cursor-pointer flex gap-3 hover:text-yellow-500 my-3' key={index}> 
+                  <div  className=' cursor-pointer  flex gap-3 hover:text-yellow-500 my-3' key={index}> 
                       <div onClick={()=> setContactUserId(val.val._id)}> {val.val.username} </div>
-                      <div> {val.senderToUserChatsCount} </div>
+                      {/* <div> {val.senderToUserChatsCount} </div> */}
+                      <div>
+
+                      {checkOnlineUser(val.val._id) ? "Online" : "Offline"}
+                      </div>
+
+                      
                   </div>
                 ))
                }
@@ -168,7 +184,7 @@ const page = () => {
             </div>
            ))}
           <form onSubmit={handleSubmit} className=' flex gap-3'>
-            <input onChange={(e)=> setText(e.target.value)} className=' outline-none rounded-md text-black w-[60vw] p-3' />
+            <input required onChange={(e)=> setText(e.target.value)} className=' outline-none rounded-md text-black w-[60vw] p-3' />
             <button type='submit' className=' bg-cyan-500 p-3 px-5 rounded-md'>SEND</button>
           </form>
         </div>

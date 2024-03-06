@@ -57,20 +57,24 @@ io.on('connection', async (socket)=> {
     console.log('connected');
     socket.emit("message", socket.id)
     global.chatSocket = socket;
-    socket.on('add-user', async(userId)=> {
+    socket.on('add-user', async(newUserId)=> {
         // console.log(userId);
-        global.onlineUsers.set(userId, socket.id)
-        users.push({
-            userId:socket.userId,
-            socketId: socket.id
-        }); 
-        socket.emit("get-status", users)
+        if(!users.some((val)=> val.userId === newUserId)){
+            console.log('New user added');
+            global.onlineUsers.set(newUserId, socket.id)
+            users.push({
+                userId:socket.userId,
+                socketId: socket.id
+            }); 
+        }
+       
+        io.emit("get-status", users)
     });
 
    
     socket.on('disconnect', ()=> {
         const filteredUsers= users.filter((val)=> val.socketId !== socket.id);
-        socket.emit("get-status", filteredUsers)
+        io.emit("get-status", filteredUsers)
         console.log('Socket connection closed');
     })
 
