@@ -77,7 +77,6 @@ const page = () => {
 
   useEffect(()=> {
     const id= localStorage.getItem('userId')
-    // console.log('pppppppppppp', id, contactUserId);
     const fun = async()=> {
       const res= await fetch(`${BASE_URL}/chat/getChats`,{
         method:"POST",
@@ -130,12 +129,9 @@ const page = () => {
       console.log(err);
     }
   }
-  
-    console.log('jim',contacts);
+
     const checkOnlineUser = (id)=> {
-      console.log('bingg',id);
       const res= activeUsers.some((val)=> val.userId === id)
-      console.log(res);
       return res
     }
   return (
