@@ -53,7 +53,7 @@ const page = () => {
       try{
         const token= localStorage.getItem('token')
         const id= localStorage.getItem('userId')
-        console.log('iddddd', id);
+        //console.log('iddddd', id);
         const res= await fetch(`${BASE_URL}/user/all/${id}`,{
           method:"GET",
           headers:{
@@ -133,7 +133,7 @@ const page = () => {
     const checkOnlineUser = (id)=> {
       const res= activeUsers.some((val)=> val.userId === id)
       return res
-    }
+    } 
   return (
     <div className=' w-[100vw]'>
       <ChatNav />
