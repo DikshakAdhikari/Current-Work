@@ -97,7 +97,7 @@ const page = () => {
     fun();
   },[ toggle || contactUserId])
 
-//console.log(messages);
+console.log(messages);
   const handleSubmit = async(e)=> {
     e.preventDefault();
     const id= localStorage.getItem('userId')
@@ -149,6 +149,8 @@ const page = () => {
       }
     }
 
+    
+
   return (
     <div className=' w-[100vw]'>
       <ChatNav />
@@ -177,9 +179,9 @@ const page = () => {
         <div className=' border-r-4 bg-black w-[100vw]  p-4 border-gray-300  '>
            {messages?.map((val,index)=> (
             <div key={index}>
-              {
+              {/* {
                 !val.userSend && submitUnseen(val)
-              }
+              } */}
               {
                 val.userSend ?
                 <div className= " bg-blue-600 text-white">
