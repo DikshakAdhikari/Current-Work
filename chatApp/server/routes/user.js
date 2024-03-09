@@ -45,6 +45,27 @@ userRouter.post('/signin',async(req,res)=> {
 })
 
 
+// userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
+//     try{
+//         const senders= await USER.find({ _id: { $ne: req.params.userId } }).select([
+//             "email", "username","_id"
+//         ]);
+//         // console.log('posttttt', global.online);
+//         let chatArray= []
+//         const chats = await Promise.all(senders.map(async (val) => {
+//             const senderId = val._id.toString();
+//             // const username= val.username
+//             // const email= val.email
+//             const senderToUserChatsCount = await CHAT.find({ users: [senderId, req.params.userId] }).count();
+//             chatArray.push({val , senderToUserChatsCount})
+//         }));
+//         // console.log(chatArray);
+//         res.json(chatArray)
+//     }catch(err){
+//         res.json(err)
+//     }
+// });
+
 userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
     try{
         const senders= await USER.find({ _id: { $ne: req.params.userId } }).select([
@@ -56,7 +77,7 @@ userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
             const senderId = val._id.toString();
             // const username= val.username
             // const email= val.email
-            const senderToUserChatsCount = await CHAT.find({ users: [senderId, req.params.userId] }).count();
+            const senderToUserChatsCount = await CHAT.find({ $and : [ {users: [senderId, req.params.userId]} , {seen:false} ]}).count();
             chatArray.push({val , senderToUserChatsCount})
         }));
         // console.log(chatArray);
@@ -66,6 +87,5 @@ userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
     }
 });
 
-// userRouter.get()
 
 module.exports= userRouter

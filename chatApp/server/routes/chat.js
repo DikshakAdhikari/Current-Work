@@ -11,12 +11,13 @@ chatRouter.post('/getChats', async(req,res)=> {
             $all:[from, to]
             }
         }).sort({ updatedAt: 1 });
-        
+       
         let chats= []
         data.map((val)=> {
             const obj={};
             // console.log('senderrrr', val.sender.toString());
             obj.chat= val.chat.text;
+            obj._id= val._id
             if(val.sender.toString() === from){
                 obj.userSend=true;
             }else{
@@ -76,6 +77,17 @@ chatRouter.put('/seen/:userId', async(req,res)=> {
 
     }catch(err){
         res.json(err);
+    }
+});
+
+chatRouter.get('/:chatId', async (req,res)=> {
+    try{
+        console.log(req.params.chatId);
+        const updateSeen= await CHAT.findOneAndUpdate({_id:req.params.chatId}, {seen:true} );
+        console.log(updateSeen);
+        res.json("seen updated")
+    }catch(err){
+        console.log(err);
     }
 })
 

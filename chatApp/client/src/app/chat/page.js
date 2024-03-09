@@ -35,15 +35,12 @@ const page = () => {
   },[]);
 
   useEffect(()=> {
-    setMessages((prev)=> 
-      [...prev, recievedMessage]
-    )
+    setMessages( [...messages, recievedMessage] )
   },[recievedMessage])
 
 
   useEffect(()=> {
     socket.current.on("get-status", users => {
-      console.log('yyyy',users);
       setActiveUsers(users)
     } )
   },[socket]);
@@ -100,7 +97,7 @@ const page = () => {
     fun();
   },[ toggle || contactUserId])
 
-
+//console.log(messages);
   const handleSubmit = async(e)=> {
     e.preventDefault();
     const id= localStorage.getItem('userId')
@@ -134,6 +131,24 @@ const page = () => {
       const res= activeUsers.some((val)=> val.userId === id)
       return res
     } 
+
+    const submitUnseen = async(senderChat)=> {
+      console.log("sender chat",senderChat);
+      try{
+        const res= await fetch(`${BASE_URL}/chat/${senderChat._id}`,{
+          headers:{
+            'Content-Type':'application/json',
+          }
+        });
+        if(!res.ok){
+          throw new Error("Network problem")
+        }
+        const data= await res.json()
+      }catch(err){
+        console.log(err);
+      }
+    }
+
   return (
     <div className=' w-[100vw]'>
       <ChatNav />
@@ -147,7 +162,7 @@ const page = () => {
                 contacts?.map((val,index)=> (
                   <div  className=' cursor-pointer  flex gap-3 hover:text-yellow-500 my-3' key={index}> 
                       <div onClick={()=> setContactUserId(val.val._id)}> {val.val.username} </div>
-                      {/* <div> {val.senderToUserChatsCount} </div> */}
+                      <div> {val.senderToUserChatsCount} </div>
                       <div>
 
                       {checkOnlineUser(val.val._id) ? "Online" : "Offline"}
@@ -162,6 +177,9 @@ const page = () => {
         <div className=' border-r-4 bg-black w-[100vw]  p-4 border-gray-300  '>
            {messages?.map((val,index)=> (
             <div key={index}>
+              {
+                !val.userSend && submitUnseen(val)
+              }
               {
                 val.userSend ?
                 <div className= " bg-blue-600 text-white">

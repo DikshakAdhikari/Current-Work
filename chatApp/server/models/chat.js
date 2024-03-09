@@ -15,12 +15,8 @@ const ChatSchema= new mongoose.Schema({
     },
     seen: {
         type:Boolean,
+        default:false,
         required:true
-    },
-    timestamp: {
-        type: Array,
-        default: [],
-        required: true
     }
 },{timestamps:true});
 //val new
