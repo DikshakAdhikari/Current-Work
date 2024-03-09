@@ -97,7 +97,7 @@ const page = () => {
     fun();
   },[ toggle || contactUserId])
 
-console.log(messages);
+
   const handleSubmit = async(e)=> {
     e.preventDefault();
     const id= localStorage.getItem('userId')
