@@ -7,7 +7,7 @@ import { BASE_URL } from '../secret'
 const page = () => {
   const socket= useRef()
   const [contacts, setContacts]= useState([])
-  const [contactUserId, setContactUserId]= useState()
+  const [contactUserId, setContactUserId]= useState(undefined)
   const [text, setText]= useState('');
   const [messages, setMessages]= useState([])
   const [toggle, setToggle]= useState(false)
@@ -149,6 +149,30 @@ const page = () => {
       }
     }
 
+    useEffect(()=>{
+      const fun = async ()=> {
+        const res= await fetch(`${BASE_URL}/chat/updateSeen`,{
+          method:"POST",
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({
+            senderId:contactUserId,
+            userId:localStorage.getItem('userId')
+          })
+        });
+
+        if(!res.ok){
+          throw new Error('Network error');
+        }
+        const data= await res.json()
+        console.log(data);
+      }
+      if(contactUserId != undefined){
+        fun()
+
+      }
+    },[contactUserId])
     
 
   return (

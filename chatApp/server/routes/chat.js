@@ -10,7 +10,7 @@ chatRouter.post('/getChats', async(req,res)=> {
             users:{
             $all:[from, to]
             }
-        }).sort({ updatedAt: 1 });
+        }).sort({ createdAt: 1 });
        
         let chats= []
         data.map((val)=> {
@@ -98,4 +98,17 @@ chatRouter.get('/:chatId', async (req,res)=> {
     }
 })
 
+chatRouter.post('/updateSeen', async (req,res)=> {
+    try{
+        const { senderId, userId}= req.body;
+        const updated = await CHAT.updateMany(
+            { users: [senderId, userId], seen: false }, // Condition: userIds present and seen=false
+            { $set: { seen: true } } // Update: set seen to true
+          );
+        console.log(updated);
+        res.json('updated successfully')
+    }catch(err){
+        res.json(err)
+    }
+})
 module.exports= chatRouter
