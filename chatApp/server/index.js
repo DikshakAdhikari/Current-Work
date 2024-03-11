@@ -61,12 +61,12 @@ io.on('connection', async (socket)=> {
          console.log('newUserId',newUserId);
         if(!users.some((val)=> val.userId === newUserId)){
             console.log('New user added');
-            onlineUsers.set(newUserId, socket.id)
             users.push({
                 userId:socket.userId,
                 socketId: socket.id
             }); 
         }
+        onlineUsers.set(newUserId, socket.id)
        
         io.emit("get-status", users)
     });
@@ -75,7 +75,7 @@ io.on('connection', async (socket)=> {
     socket.on('disconnect', ()=> {
         const filteredUsers= users.filter((val)=> val.socketId !== socket.id);
         console.log(socket.userId);
-         onlineUsers.delete(socket.userId)
+          onlineUsers.delete(socket.userId)
         io.emit("get-status", filteredUsers)
         console.log('Socket connection closed');
     })
