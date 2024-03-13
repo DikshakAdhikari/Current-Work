@@ -67,14 +67,14 @@ io.on('connection', async (socket)=> {
             }); 
         }
         onlineUsers.set(newUserId, socket.id)
-       
+        
         io.emit("get-status", users)
     });
 
    
     socket.on('disconnect', ()=> {
         const filteredUsers= users.filter((val)=> val.socketId !== socket.id);
-        console.log(socket.userId);
+        console.log(filteredUsers);
           onlineUsers.delete(socket.userId)
         io.emit("get-status", filteredUsers)
         console.log('Socket connection closed');

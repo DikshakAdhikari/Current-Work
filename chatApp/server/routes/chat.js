@@ -105,7 +105,6 @@ chatRouter.post('/updateSeen', async (req,res)=> {
             { users: [senderId, userId], seen: false }, // Condition: userIds present and seen=false
             { $set: { seen: true } } // Update: set seen to true
           );
-        console.log(updated);
         res.json('updated successfully')
     }catch(err){
         res.json(err)

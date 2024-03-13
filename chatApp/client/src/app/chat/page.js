@@ -13,6 +13,8 @@ const page = () => {
   const [toggle, setToggle]= useState(false)
   const [recievedMessage, setRecievedMessage]= useState({})
   const [activeUsers, setActiveUsers]= useState([])
+  const [contactClick, setContactClick]= useState([])
+  const [online, setOnline] = useState([])
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       auth:{token: localStorage.getItem('token')}
@@ -41,6 +43,7 @@ const page = () => {
 
   useEffect(()=> {
     socket.current.on("get-status", users => {
+      console.log('usersss', users);
       setActiveUsers(users)
     } )
   },[socket]);
@@ -48,8 +51,8 @@ const page = () => {
   useEffect(()=> {
     const fun = async ()=> {
       try{
-        const token= localStorage.getItem('token')
-        const id= localStorage.getItem('userId')
+        const token= localStorage.getItem('token');
+        const id= localStorage.getItem('userId');
         //console.log('iddddd', id);
         const res= await fetch(`${BASE_URL}/user/all/${id}`,{
           method:"GET",
@@ -62,7 +65,9 @@ const page = () => {
           throw new Error("Network Error!");
         }
         const data= await res.json();
-        console.log(data);
+        const array= Array(data.length).fill(false)
+        setContactClick(array)
+        setOnline(array)
         setContacts(data)
       }catch(err){
         console.log(err);
@@ -97,11 +102,14 @@ const page = () => {
     fun();
   },[ toggle || contactUserId])
 
-  
+  const fun = ()=> {
+    console.log(activeUsers);
+  }
   const handleSubmit = async(e)=> {
     e.preventDefault();
     const id= localStorage.getItem('userId')
     console.log(id, contactUserId, text);
+    fun()
     try{
       socket.current.emit("send-chat",{text, contactUserId});
        const res= await fetch(`${BASE_URL}/chat`, {
@@ -127,28 +135,33 @@ const page = () => {
     }
   }
 
-    const checkOnlineUser = (id)=> {
-      const res= activeUsers.some((val)=> val.userId === id)
+    const checkOnlineUser = (id, index)=> {
+      const res= activeUsers.some((val)=> val.userId === id);
+      // setOnline((prev)=> {
+      //   prev[index]= res;
+      //   return prev
+      // })
       return res
     } 
 
-    const submitUnseen = async(senderChat)=> {
-      console.log("sender chat",senderChat);
-      try{
-        const res= await fetch(`${BASE_URL}/chat/${senderChat._id}`,{
-          headers:{
-            'Content-Type':'application/json',
-          }
-        });
-        if(!res.ok){
-          throw new Error("Network problem")
-        }
-        const data= await res.json()
-      }catch(err){
-        console.log(err);
-      }
-    }
+    // const submitUnseen = async(senderChat)=> {
+    //   console.log("sender chat",senderChat);
+    //   try{
+    //     const res= await fetch(`${BASE_URL}/chat/${senderChat._id}`,{
+    //       headers:{
+    //         'Content-Type':'application/json',
+    //       }
+    //     });
+    //     if(!res.ok){
+    //       throw new Error("Network problem")
+    //     }
+    //     const data= await res.json()
+    //   }catch(err){
+    //     console.log(err);
+    //   }
+    // }
 
+      
     useEffect(()=>{
       const fun = async ()=> {
         const res= await fetch(`${BASE_URL}/chat/updateSeen`,{
@@ -166,11 +179,9 @@ const page = () => {
           throw new Error('Network error');
         }
         const data= await res.json()
-        console.log(data);
       }
       if(contactUserId != undefined){
-        fun()
-
+        fun();
       }
     },[contactUserId])
     
@@ -187,11 +198,17 @@ const page = () => {
               {
                 contacts?.map((val,index)=> (
                   <div  className=' cursor-pointer  flex gap-3 hover:text-yellow-500 my-3' key={index}> 
-                      <div onClick={()=> setContactUserId(val.val._id)}> {val.val.username} </div>
-                      <div> {val.senderToUserChatsCount} </div>
+                      <div onClick={()=> {
+                        setContactUserId(val.val._id)
+                        setContactClick((prev)=> {
+                          prev[index]=true
+                          return prev
+                        })
+                        }}> {val.val.username} </div>
+                      <div>   { !contactClick[index] && val.senderToUserChatsCount} </div>
                       <div>
 
-                      {checkOnlineUser(val.val._id) ? "Online" : "Offline"}
+                      {checkOnlineUser(val.val._id , index) ? "Online" : "Offline"}
                       </div>       
                   </div>
                 ))
