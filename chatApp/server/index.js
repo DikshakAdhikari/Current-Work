@@ -81,11 +81,12 @@ io.on('connection', async (socket)=> {
     })
 
    
-  socket.on('send-chat', ({text, contactUserId})=> { //send chat function
+  socket.on('send-chat', ({text, contactUserId})=> { 
     
     const sendUserSocketId = onlineUsers.get(contactUserId);
     if(sendUserSocketId){
         socket.to(sendUserSocketId).emit("recieve-chat",text);
     }  
   })
+  //socket done
 });
