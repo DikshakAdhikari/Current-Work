@@ -27,7 +27,7 @@ app.get('/', (req,res)=> {
     console.log('Server listening on port '+ PORT); 
 });
 
-
+//cors added
 const io= socket(serverr, {
     cors:{
         origin:"http://localhost:3000",
@@ -88,5 +88,5 @@ io.on('connection', async (socket)=> {
         socket.to(sendUserSocketId).emit("recieve-chat",text);
     }  
   })
-  //socket done
+  
 });
