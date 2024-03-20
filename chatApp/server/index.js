@@ -73,7 +73,7 @@ io.on('connection', async (socket)=> {
 
    
     socket.on('disconnect', ()=> {
-        const filteredUsers= users.filter((val)=> val.socketId !== socket.id);
+        const filteredUsers= users.filter((val)=> val.socketId !== socket.id); //This is notified
         console.log(filteredUsers);
           onlineUsers.delete(socket.userId)
         io.emit("get-status", filteredUsers)
