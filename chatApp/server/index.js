@@ -69,9 +69,10 @@ io.on('connection', async (socket)=> {
         onlineUsers.set(newUserId, socket.id)
         
         io.emit("get-status", users)
+
     });
 
-   
+   //This is to disconnect the connection
     socket.on('disconnect', ()=> {
         const filteredUsers= users.filter((val)=> val.socketId !== socket.id); //This is notified
         console.log(filteredUsers);
