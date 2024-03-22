@@ -15,6 +15,7 @@ app.use(cors({
     origin:"http://localhost:3000",
     credentials:true
 }));
+
 connectDb()
 app.use('/user', userRouter)
 app.use('/chat', chatRouter )

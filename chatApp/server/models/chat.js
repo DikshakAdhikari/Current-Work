@@ -19,6 +19,6 @@ const ChatSchema= new mongoose.Schema({
         required:true
     }
 },{timestamps:true});
-//val new
+
 const CHAT= new mongoose.model('chat', ChatSchema)
 module.exports= CHAT
