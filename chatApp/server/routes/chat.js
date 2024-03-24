@@ -2,7 +2,7 @@ const express= require('express');
 const CHAT = require('../models/chat');
 const chatRouter= express.Router()
 
-
+//chat started
 chatRouter.post('/getChats', async(req,res)=> {
     try{
         const {from, to}= req.body;
