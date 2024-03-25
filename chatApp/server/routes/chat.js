@@ -15,7 +15,7 @@ chatRouter.post('/getChats', async(req,res)=> {
         let chats= []
         data.map((val)=> {
             const obj={};
-            // console.log('senderrrr', val.sender.toString());
+            // console.log('sender', val.sender.toString());
             obj.chat= val.chat.text;
             obj._id= val._id
             if(val.sender.toString() === from){
@@ -31,6 +31,8 @@ chatRouter.post('/getChats', async(req,res)=> {
         //         await CHAT.findOneAndUpdate({_id:val._id},{seen:true})
         //     }
         // }))
+
+
 
         res.json(chats)
     }catch(err){
