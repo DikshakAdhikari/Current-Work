@@ -76,9 +76,9 @@ io.on('connection', async (socket)=> {
    //This is to disconnect the connection
     socket.on('disconnect', ()=> {
         const filteredUsers= users.filter((val)=> val.socketId !== socket.id); //This is notified
-        console.log(filteredUsers);
           onlineUsers.delete(socket.userId)
         io.emit("get-status", filteredUsers)
+        users = users.filter(user => user.userId !== socket.userId);
         console.log('Socket connection closed');
     })
 
