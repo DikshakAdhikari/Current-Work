@@ -17,12 +17,12 @@ function printOutput(username, numberOfPublicRepos){
 
 async function cache(req,res,next) {
     const username= req.params["username"];
-    console.log(username);
 
     const redisReponse= await client.get(username)
     console.log('redis response',redisReponse);
     if(redisReponse != null){
         res.send(printOutput(username, redisReponse))
+
     }else{
 
         next()
