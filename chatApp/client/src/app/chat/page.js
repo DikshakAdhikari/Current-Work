@@ -25,11 +25,19 @@ const page = () => {
     });
     const id = localStorage.getItem('userId')
     //console.log(id);
-    socket.current.emit("add-user", id )
+    socket.current.on('connected',(socketId)=> {
+      console.log('current socketId', socketId);
+      console.log(id);
+      socket.current.emit("add-user", {id , socketId} )
    
+      
+    })
+
     socket.current.on('disconnect', ()=> {
       console.log('Socket connection closed');
     })
+   
+   
 
     return ()=> {
       socket.current.close()
@@ -136,7 +144,9 @@ const page = () => {
   }
 
     const checkOnlineUser = (id, index)=> {
-      const res= activeUsers.some((val)=> val.userId === id);
+    
+      const res= activeUsers.some((val)=> val.userId === id.val._id);
+      console.log(res);
       // setOnline((prev)=> {
       //   prev[index]= res;
       //   return prev
@@ -183,7 +193,7 @@ const page = () => {
       if(contactUserId != undefined){
         fun();
       }
-    },[contactUserId])
+    },[contactUserId]);
     
 
   return (
@@ -197,8 +207,10 @@ const page = () => {
             <div>
               {
                 contacts?.map((val,index)=> (
+                  
                   <div  className=' cursor-pointer  flex gap-3 hover:text-yellow-500 my-3' key={index}> 
                       <div onClick={()=> {
+                        console.log(val);
                         setContactUserId(val.val._id)
                         setContactClick((prev)=> {
                           prev[index]=true
@@ -208,7 +220,7 @@ const page = () => {
                       <div>   { !contactClick[index] && val.senderToUserChatsCount} </div>
                       <div>
 
-                      {checkOnlineUser(val.val._id , index) ? "Online" : "Offline"}
+                      {checkOnlineUser(val , index) ? "Online" : "Offline"}
                       </div>       
                   </div>
                 ))

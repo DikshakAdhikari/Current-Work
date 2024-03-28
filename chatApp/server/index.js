@@ -56,19 +56,28 @@ let onlineUsers= new Map()
 let users= []
 io.on('connection', async (socket)=> {
     console.log('connected');
-    socket.emit("message", socket.id)
+    socket.emit("connected", socket.id)
+    console.log(socket.userId);
+    if(!users.some((val)=> val.userId === socket.userId)){
+        users.push({
+            userId: socket.userId,
+            socketId: socket.id
+        }); 
+    }
     global.chatSocket = socket;
-    socket.on('add-user', async(newUserId)=> {
-         console.log('newUserId',newUserId);
-        if(!users.some((val)=> val.userId === newUserId)){
+    socket.on('add-user', async(newUser)=> {
+         console.log('newUserId',newUser.id);
+         console.log('current socketId',newUser.socketId);
+        if(!users.some((val)=> val.userId === newUser.id)){
             console.log('New user added');
             users.push({
-                userId:socket.userId,
-                socketId: socket.id
+                userId: newUser.id,
+                socketId: newUser.socketId
             }); 
+           
         }
-        onlineUsers.set(newUserId, socket.id)
-        
+        onlineUsers.set(newUser.id, newUser.socketId)
+        console.log(users);
         io.emit("get-status", users)
 
     });
