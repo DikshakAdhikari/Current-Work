@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model User { //model
   id Int @id @default(autoincrement())
   email String @unique
   name String @map("userName")
@@ -18,6 +18,8 @@ model User {
   posts Post[]
 
   @@map("users")
+
+
   @@unique([email,name])
   @@index([id,email])
   
