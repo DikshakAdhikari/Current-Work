@@ -37,7 +37,7 @@ userRouter.post('/signin',async(req,res)=> {
             return res.status(403).json("User not registered!")
         }
         const token= jwt.sign({id:user._id, username:user.username, email:user.email}, "secret" ) 
-        res.json({token, userId:user._id})
+        res.json({token, userId:user._id, username:user.username})
 
     }catch(err){
         res.status(403).json(err)

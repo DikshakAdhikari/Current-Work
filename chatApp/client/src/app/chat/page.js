@@ -146,7 +146,7 @@ const page = () => {
     const checkOnlineUser = (id, index)=> {
     
       const res= activeUsers.some((val)=> val.userId === id.val._id);
-      console.log(res);
+      //console.log(res);
       // setOnline((prev)=> {
       //   prev[index]= res;
       //   return prev
