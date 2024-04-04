@@ -55,9 +55,9 @@ let onlineUsers= new Map()
 
 let users= []
 io.on('connection', async (socket)=> {
-    console.log('connected');
+    // console.log('connected');
     socket.emit("connected", socket.id)
-    console.log(socket.userId);
+    // console.log(socket.userId);
     if(!users.some((val)=> val.userId === socket.userId)){
         users.push({
             userId: socket.userId,
@@ -66,8 +66,8 @@ io.on('connection', async (socket)=> {
     }
     global.chatSocket = socket;
     socket.on('add-user', async(newUser)=> {
-         console.log('newUserId',newUser.id);
-         console.log('current socketId',newUser.socketId);
+        //  console.log('newUserId',newUser.id);
+        //  console.log('current socketId',newUser.socketId);
         if(!users.some((val)=> val.userId === newUser.id)){
             console.log('New user added');
             users.push({
@@ -77,12 +77,12 @@ io.on('connection', async (socket)=> {
            
         }
         onlineUsers.set(newUser.id, newUser.socketId)
-        console.log(users);
+        // console.log(users);
         io.emit("get-status", users)
 
     });
 
-   //This is to disconnect the connection
+   
     socket.on('disconnect', ()=> {
         const filteredUsers= users.filter((val)=> val.socketId !== socket.id); //This is notified
           onlineUsers.delete(socket.userId)
@@ -96,7 +96,8 @@ io.on('connection', async (socket)=> {
     
     const sendUserSocketId = onlineUsers.get(contactUserId);
     if(sendUserSocketId){
-        socket.to(sendUserSocketId).emit("recieve-chat",text);
+        socket.to(sendUserSocketId).emit("recieve-chat",{text, userId:socket.userId});
+        socket.to(sendUserSocketId).emit("notification",{userId:socket.userId});
     }  
   })
   

@@ -1,8 +1,8 @@
 "use client"
-import ChatNav from '@/components/ChatNav'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 import { BASE_URL } from '../secret'
+import ChatNav from '../../components/ChatNav'
 
 const page = () => {
   const socket= useRef()
@@ -14,31 +14,30 @@ const page = () => {
   const [recievedMessage, setRecievedMessage]= useState({})
   const [activeUsers, setActiveUsers]= useState([])
   const [contactClick, setContactClick]= useState([])
-  const [online, setOnline] = useState([])
+  const [online, setOnline] = useState([]);
+  const [chatsReciveCount, setChatsRecieveCount]=  useState([])
+  const [recieveChatUserid, setRecieveChatUserid]= useState(undefined)
+  
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       auth:{token: localStorage.getItem('token')}
     });
- 
+  
     socket.current.on("recieve-chat", text => {
-      setRecievedMessage({userSend:false , chat:text})
+      console.log(text);
+      setRecievedMessage({userSend:false , chat:text.text})
+     setRecieveChatUserid(text.userId)  
     });
+
     const id = localStorage.getItem('userId')
     //console.log(id);
     socket.current.on('connected',(socketId)=> {
-      console.log('current socketId', socketId);
-      console.log(id);
-      socket.current.emit("add-user", {id , socketId} )
-   
-      
-    })
+      socket.current.emit("add-user", {id , socketId} )  
+    });
 
     socket.current.on('disconnect', ()=> {
       console.log('Socket connection closed');
-    })
-   
-   
-
+    });
     return ()=> {
       socket.current.close()
     }
@@ -48,10 +47,30 @@ const page = () => {
     setMessages( [...messages, recievedMessage] )
   },[recievedMessage])
 
+  useEffect(()=> {
+    const fun= ()=> {
+     
+        const ind= contacts.findIndex((contact)=>contact.val._id === recieveChatUserid)
+        setChatsRecieveCount((prev)=> {  
+         const arr= prev  
+         arr[ind]++
+           return arr      
+        })
+      
+  
+      if(recieveChatUserid){
+        console.log('rrr');
+        fun()
+
+      }
+    }
+  
+  })
+
+  console.log(chatsReciveCount);
 
   useEffect(()=> {
     socket.current.on("get-status", users => {
-      console.log('usersss', users);
       setActiveUsers(users)
     } )
   },[socket]);
@@ -73,10 +92,14 @@ const page = () => {
           throw new Error("Network Error!");
         }
         const data= await res.json();
-        const array= Array(data.length).fill(false)
-        setContactClick(array)
-        setOnline(array)
+        console.log(data);
         setContacts(data)
+        const array= Array(data.length).fill(false);
+        const array2= Array(data.length).fill(0)
+        setContactClick(array)
+        setChatsRecieveCount(array2)
+        setOnline(array)
+        
       }catch(err){
         console.log(err);
       }
@@ -116,7 +139,7 @@ const page = () => {
   const handleSubmit = async(e)=> {
     e.preventDefault();
     const id= localStorage.getItem('userId')
-    console.log(id, contactUserId, text);
+   // console.log(id, contactUserId, text);
     fun()
     try{
       socket.current.emit("send-chat",{text, contactUserId});
@@ -172,28 +195,48 @@ const page = () => {
     // }
 
       
-    useEffect(()=>{
-      const fun = async ()=> {
-        const res= await fetch(`${BASE_URL}/chat/updateSeen`,{
-          method:"POST",
-          headers:{
-            'Content-Type': 'application/json'
-          },
-          body:JSON.stringify({
-            senderId:contactUserId,
-            userId:localStorage.getItem('userId')
-          })
-        });
+    // useEffect(()=>{
+    //   const fun = async ()=> {
+    //     const res= await fetch(`${BASE_URL}/chat/updateSeen`,{
+    //       method:"POST",
+    //       headers:{
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body:JSON.stringify({
+    //         senderId:contactUserId,
+    //         userId:localStorage.getItem('userId')
+    //       })
+    //     });
 
-        if(!res.ok){
-          throw new Error('Network error');
-        }
-        const data= await res.json()
+    //     if(!res.ok){
+    //       throw new Error('Network error');
+    //     }
+    //     const data= await res.json()
+    //   }
+    //   if(contactUserId != undefined){
+    //     fun();
+    //   }
+    // },[contactUserId]);
+
+    useEffect(()=> {
+      if(!socket.current){
+        return
       }
-      if(contactUserId != undefined){
-        fun();
-      }
-    },[contactUserId]);
+      if(contacts.length >0 ){
+        console.log(contacts);
+      socket.current.on("notification", userId => {
+        const sendUserId= userId.userId
+        let idn= -1
+        contacts.map((val,index)=> {
+          if(val.val._id === sendUserId){
+            idn = index
+          }
+        });
+        console.log(idn);
+
+      })
+    }
+    },[messages ||  recievedMessage])
     
 
   return (
@@ -210,7 +253,7 @@ const page = () => {
                   
                   <div  className=' cursor-pointer  flex gap-3 hover:text-yellow-500 my-3' key={index}> 
                       <div onClick={()=> {
-                        console.log(val);
+                        //console.log(val);
                         setContactUserId(val.val._id)
                         setContactClick((prev)=> {
                           prev[index]=true
