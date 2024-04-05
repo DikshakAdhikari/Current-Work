@@ -97,7 +97,7 @@ io.on('connection', async (socket)=> {
     const sendUserSocketId = onlineUsers.get(contactUserId);
     if(sendUserSocketId){
         socket.to(sendUserSocketId).emit("recieve-chat",{text, userId:socket.userId});
-        socket.to(sendUserSocketId).emit("notification",{userId:socket.userId});
+        socket.to(sendUserSocketId).emit("notification",{senderId:socket.userId, read:false });
     }  
   })
   

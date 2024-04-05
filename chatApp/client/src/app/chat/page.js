@@ -14,6 +14,10 @@ const page = () => {
   const [recievedMessage, setRecievedMessage]= useState({})
   const [activeUsers, setActiveUsers]= useState([])
   const [contactClick, setContactClick]= useState([])
+  const [notifications, setNotifications]= useState([])
+
+  
+
   
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
@@ -39,6 +43,13 @@ const page = () => {
   },[]);
 
 
+  useEffect(()=> {
+    socket.current.on("notification", item => {
+      setNotifications([...notifications, {item}])
+    })
+  })
+
+  // console.log("notiiii", notifications);
 
 
   useEffect(()=> {
@@ -134,8 +145,27 @@ const page = () => {
     const checkOnlineUser = (id, index)=> { 
       const res= activeUsers.some((val)=> val.userId === id.val._id);
       return res
-    } 
+    }
+    
+    function fun(senderId){
+      const filterCount = notifications.filter((val)=> (val.item.senderId === senderId && (val.item.read === false)))
+     // console.log(filterCount);
+      return filterCount.length
+    }
+    console.log(notifications);
 
+    function markRead(senderId){
+      setNotifications(prev => {
+        return prev.map((val)=> {
+          if(val.item.senderId ===  senderId){
+            return {...val, read:true}
+          }
+          return val
+        })
+      })
+    }
+
+    
   
   return (
     <div className=' w-[100vw]'>
@@ -151,14 +181,14 @@ const page = () => {
                   
                   <div  className=' cursor-pointer  flex gap-3 hover:text-yellow-500 my-3' key={index}> 
                       <div onClick={()=> {
-                        //console.log(val);
                         setContactUserId(val.val._id)
                         setContactClick((prev)=> {
                           prev[index]=true
                           return prev
                         })
                         }}> {val.val.username} </div>
-                      <div>   { !contactClick[index] && val.senderToUserChatsCount} </div>
+                      {/* <div>   { !contactClick[index] && val.senderToUserChatsCount} </div> */}
+                      <div onClick={()=> markRead(val.val._id)}> {fun(val.val._id)=== 0 ? "" : fun(val.val._id)} </div>
                       <div>
 
                       {checkOnlineUser(val , index) ? "Online" : "Offline"}
