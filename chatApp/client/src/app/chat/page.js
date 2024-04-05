@@ -15,6 +15,7 @@ const page = () => {
   const [activeUsers, setActiveUsers]= useState([])
   const [contactClick, setContactClick]= useState([])
   const [notifications, setNotifications]= useState([])
+  
 
   
 
@@ -24,9 +25,8 @@ const page = () => {
       auth:{token: localStorage.getItem('token')}
     });
   
-    socket.current.on("recieve-chat", text => {    
+   socket.current.on("recieve-chat", text => {
       setRecievedMessage({userSend:false , chat:text.text})
-
     });
 
     const id = localStorage.getItem('userId')
@@ -41,6 +41,9 @@ const page = () => {
       socket.current.close()
     }
   },[]);
+  useEffect(()=> {
+    setMessages( [...messages, recievedMessage] )
+  },[recievedMessage])
 
 
   useEffect(()=> {
