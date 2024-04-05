@@ -14,23 +14,18 @@ const page = () => {
   const [recievedMessage, setRecievedMessage]= useState({})
   const [activeUsers, setActiveUsers]= useState([])
   const [contactClick, setContactClick]= useState([])
-  const [online, setOnline] = useState([]);
-  const [chatsReciveCount, setChatsRecieveCount]=  useState([])
-  const [recieveChatUserid, setRecieveChatUserid]= useState(undefined)
   
   useEffect(()=> {
      socket.current = io(`${BASE_URL}`,{
       auth:{token: localStorage.getItem('token')}
     });
   
-    socket.current.on("recieve-chat", text => {
-      console.log(text);
+    socket.current.on("recieve-chat", text => {    
       setRecievedMessage({userSend:false , chat:text.text})
-     setRecieveChatUserid(text.userId)  
+
     });
 
     const id = localStorage.getItem('userId')
-    //console.log(id);
     socket.current.on('connected',(socketId)=> {
       socket.current.emit("add-user", {id , socketId} )  
     });
@@ -43,31 +38,8 @@ const page = () => {
     }
   },[]);
 
-  useEffect(()=> {
-    setMessages( [...messages, recievedMessage] )
-  },[recievedMessage])
 
-  useEffect(()=> {
-    const fun= ()=> {
-     
-        const ind= contacts.findIndex((contact)=>contact.val._id === recieveChatUserid)
-        setChatsRecieveCount((prev)=> {  
-         const arr= prev  
-         arr[ind]++
-           return arr      
-        })
-      
-  
-      if(recieveChatUserid){
-        console.log('rrr');
-        fun()
 
-      }
-    }
-  
-  })
-
-  console.log(chatsReciveCount);
 
   useEffect(()=> {
     socket.current.on("get-status", users => {
@@ -80,7 +52,6 @@ const page = () => {
       try{
         const token= localStorage.getItem('token');
         const id= localStorage.getItem('userId');
-        //console.log('iddddd', id);
         const res= await fetch(`${BASE_URL}/user/all/${id}`,{
           method:"GET",
           headers:{
@@ -92,13 +63,10 @@ const page = () => {
           throw new Error("Network Error!");
         }
         const data= await res.json();
-        console.log(data);
+        localStorage.setItem('data', JSON.stringify(data))
         setContacts(data)
         const array= Array(data.length).fill(false);
-        const array2= Array(data.length).fill(0)
         setContactClick(array)
-        setChatsRecieveCount(array2)
-        setOnline(array)
         
       }catch(err){
         console.log(err);
@@ -133,14 +101,11 @@ const page = () => {
     fun();
   },[ toggle || contactUserId])
 
-  const fun = ()=> {
-    console.log(activeUsers);
-  }
+
   const handleSubmit = async(e)=> {
     e.preventDefault();
     const id= localStorage.getItem('userId')
-   // console.log(id, contactUserId, text);
-    fun()
+  
     try{
       socket.current.emit("send-chat",{text, contactUserId});
        const res= await fetch(`${BASE_URL}/chat`, {
@@ -166,79 +131,12 @@ const page = () => {
     }
   }
 
-    const checkOnlineUser = (id, index)=> {
-    
+    const checkOnlineUser = (id, index)=> { 
       const res= activeUsers.some((val)=> val.userId === id.val._id);
-      //console.log(res);
-      // setOnline((prev)=> {
-      //   prev[index]= res;
-      //   return prev
-      // })
       return res
     } 
 
-    // const submitUnseen = async(senderChat)=> {
-    //   console.log("sender chat",senderChat);
-    //   try{
-    //     const res= await fetch(`${BASE_URL}/chat/${senderChat._id}`,{
-    //       headers:{
-    //         'Content-Type':'application/json',
-    //       }
-    //     });
-    //     if(!res.ok){
-    //       throw new Error("Network problem")
-    //     }
-    //     const data= await res.json()
-    //   }catch(err){
-    //     console.log(err);
-    //   }
-    // }
-
-      
-    // useEffect(()=>{
-    //   const fun = async ()=> {
-    //     const res= await fetch(`${BASE_URL}/chat/updateSeen`,{
-    //       method:"POST",
-    //       headers:{
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body:JSON.stringify({
-    //         senderId:contactUserId,
-    //         userId:localStorage.getItem('userId')
-    //       })
-    //     });
-
-    //     if(!res.ok){
-    //       throw new Error('Network error');
-    //     }
-    //     const data= await res.json()
-    //   }
-    //   if(contactUserId != undefined){
-    //     fun();
-    //   }
-    // },[contactUserId]);
-
-    useEffect(()=> {
-      if(!socket.current){
-        return
-      }
-      if(contacts.length >0 ){
-        console.log(contacts);
-      socket.current.on("notification", userId => {
-        const sendUserId= userId.userId
-        let idn= -1
-        contacts.map((val,index)=> {
-          if(val.val._id === sendUserId){
-            idn = index
-          }
-        });
-        console.log(idn);
-
-      })
-    }
-    },[messages ||  recievedMessage])
-    
-
+  
   return (
     <div className=' w-[100vw]'>
       <ChatNav />
