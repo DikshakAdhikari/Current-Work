@@ -14,10 +14,8 @@ const page = () => {
   const [recievedMessage, setRecievedMessage]= useState({})
   const [activeUsers, setActiveUsers]= useState([])
   const [contactClick, setContactClick]= useState([])
+  const [g, setG]= useState([])
   const [notifications, setNotifications]= useState([])
-  
-
-  
 
   
   useEffect(()=> {
@@ -77,9 +75,13 @@ const page = () => {
           throw new Error("Network Error!");
         }
         const data= await res.json();
+        console.log(data);
         localStorage.setItem('data', JSON.stringify(data))
         setContacts(data)
         const array= Array(data.length).fill(false);
+        const array2= Array(data.length).fill(0);
+
+        setG(array2)
         setContactClick(array)
         
       }catch(err){
@@ -150,12 +152,12 @@ const page = () => {
       return res
     }
     
-    function fun(senderId){
+    function fun(senderId, index){
       const filterCount = notifications.filter((val)=> (val.item.senderId === senderId && (val.item.read === false)))
-     // console.log(filterCount);
+     
       return filterCount.length
     }
-    console.log(notifications);
+    
 
     function markRead(senderId){
       setNotifications(prev => {
@@ -165,8 +167,10 @@ const page = () => {
           }
           return val
         })
-      })
+      });
     }
+
+  
 
     
   
@@ -191,9 +195,8 @@ const page = () => {
                         })
                         }}> {val.val.username} </div>
                       {/* <div>   { !contactClick[index] && val.senderToUserChatsCount} </div> */}
-                      <div onClick={()=> markRead(val.val._id)}> {fun(val.val._id)=== 0 ? "" : fun(val.val._id)} </div>
+                      <div onClick={()=> markRead(val.val._id)}> {fun(val.val._id)=== 0 ? "" : fun(val.val._id, index)} </div>
                       <div>
-
                       {checkOnlineUser(val , index) ? "Online" : "Offline"}
                       </div>       
                   </div>

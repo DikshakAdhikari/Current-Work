@@ -78,7 +78,8 @@ userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
             // const username= val.username
             // const email= val.email
             const senderToUserChatsCount = await CHAT.find({ $and : [ {users: [senderId, req.params.userId]} , {seen:false} ]}).count();
-            chatArray.push({val , senderToUserChatsCount})
+            // chatArray.push({val , senderToUserChatsCount})
+            chatArray.push({val , unseenChats:0, read:false})
         }));
         // console.log(chatArray);
         res.json(chatArray)
