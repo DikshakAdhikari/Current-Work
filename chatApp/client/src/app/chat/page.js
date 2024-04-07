@@ -35,6 +35,8 @@ const page = () => {
     socket.current.on('disconnect', ()=> {
       console.log('Socket connection closed');
     });
+    //disconenct
+
     return ()=> {
       socket.current.close()
     }
