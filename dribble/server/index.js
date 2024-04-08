@@ -4,7 +4,7 @@ import cors from 'cors'
 import { mongooseConnect } from './connection/connect.js'
 import userRouter from './routes/userRouter.js'
 import profileRouter from './routes/profileRouter.js'
-import { Resend } from "resend";
+import nodemailer from "nodemailer"
 dotenv.config()
 
 const app= express()
@@ -14,26 +14,41 @@ app.use(cors({
 }))
 
 app.use(express.json())
-const resend = new Resend("re_cR3K4MjP_xGbAHxxyjdVghS9fmawj3K3W");
+
+const transporter = nodemailer.createTransport({
+  service:'gmail',
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
 
 app.use('/user', userRouter)
 app.use('/profile', profileRouter)
-
-app.get("/", async (req, res) => {
+app.get('/:id', async(req,res)=> {
   const emailId= req.params.id
-  const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
-    to: ["sejal8974@gmail.com"],
-    subject: "hello world",
-    text:'hello'
-  });
-
-  if (error) {
-    return res.status(400).json({ error });
+  try{
+    const info = await transporter.sendMail({
+      from: {
+        name: 'Test',
+        address:process.env.EMAIL
+      },  
+      to: `${emailId}`, 
+      subject: "Hello ✔", 
+      text: "Hello world?", 
+      html: "<b>Hello world?</b>", 
+    });
+  
+    res.json(info.messageId)
+  }catch(err){
+    res.status(403).json({message:err})
   }
+ 
+})
 
-  res.status(200).json({ data });
-});
 
 
 app.listen(process.env.PORT , ()=> console.log(`Server listening on port ${process.env.PORT}`))
