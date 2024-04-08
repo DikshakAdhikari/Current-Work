@@ -6,9 +6,9 @@ import userRouter from './routes/userRouter.js'
 import profileRouter from './routes/profileRouter.js'
 import nodemailer from "nodemailer"
 dotenv.config()
-
 const app= express()
 mongooseConnect()
+
 app.use(cors({
   origin: "http://localhost:3000"
 }))
@@ -48,7 +48,5 @@ app.get('/:id', async(req,res)=> {
   }
  
 })
-
-
 
 app.listen(process.env.PORT , ()=> console.log(`Server listening on port ${process.env.PORT}`))
