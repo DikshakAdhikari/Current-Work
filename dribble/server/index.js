@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
   service:'gmail',
   host: "smtp.gmail.com",
   port: 587,
-  secure: false, // Use `true` for port 465, `false` for all other ports
+  secure: false,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASSWORD,
@@ -38,8 +38,8 @@ app.get('/:id', async(req,res)=> {
       },  
       to: `${emailId}`, 
       subject: "Hello ✔", 
-      text: "Hello world?", 
-      html: "<b>Hello world?</b>", 
+      text: "Thank you", 
+      html: "<b>Thank you</b>", 
     });
   
     res.json(info.messageId)
