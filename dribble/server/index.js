@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import userRouter from './routes/userRouter.js'
 import { mongooseConnect } from './connection/connect.js'
-mongooseConnect()
 import profileRouter from './routes/profileRouter.js'
 import nodemailer from "nodemailer"
 dotenv.config()
@@ -15,6 +14,7 @@ app.use(cors({
   origin: "http://localhost:3000"
 }))
 
+mongooseConnect()
 app.use('/user', userRouter)
 app.use('/profile', profileRouter)
 
