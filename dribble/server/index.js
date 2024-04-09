@@ -2,12 +2,12 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { mongooseConnect } from './connection/connect.js'
+mongooseConnect()
 import userRouter from './routes/userRouter.js'
 import profileRouter from './routes/profileRouter.js'
 import nodemailer from "nodemailer"
 dotenv.config()
 const app= express()
-mongooseConnect()
 
 
 app.use(cors({
