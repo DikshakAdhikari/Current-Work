@@ -4,6 +4,7 @@ import Image from "../assets/hire.jpeg";
 import Design from "../assets/design.jpg";
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../Service';
+import Navbar from './Navbar';
 
 const Content = () => {
   const [isChecked1, setIsChecked1] = useState(false);
@@ -47,7 +48,12 @@ const Content = () => {
   }
 
   return (
-    <div className="max-w-screen-md mx-auto px-4 py-8">
+    <div className=' bg-gray-100  h-[100vh] w-[100%]'>
+        <div className='sticky '>
+    <Navbar />
+  </div>
+    <div className="max-w-screen-md   mx-auto px-4 py-8">
+         
       <h1 className="text-3xl font-bold text-center mb-4">What brings you to Dribble?</h1>
       <p className="text-xs text-gray-700 text-center">Select the option that best describes you. Don't worry, you can explore other options later.</p>
 
@@ -114,6 +120,7 @@ const Content = () => {
         <button onClick={()=> handleClick()} disabled={!isButtonEnabled} className={`w-32 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isButtonEnabled ? 'bg-pink-500' : 'bg-gray-300 cursor-not-allowed'}`}>Finish</button>
         {isButtonEnabled && <p className="text-xs text-gray-700 mt-1">or Press RETURN</p>}
       </div>
+    </div>
     </div>
   );
 };

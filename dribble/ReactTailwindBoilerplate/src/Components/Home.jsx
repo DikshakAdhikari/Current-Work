@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CameraLogo } from '../Logo';
 import { BASE_URL } from '../Service';
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from './Navbar';
 const WelcomePage = () => {
   const [file, setFile] = useState(null);
   const inputRef= useRef(null)
@@ -98,6 +98,10 @@ const WelcomePage = () => {
 
  
   return (
+    <div>
+    <div className='sticky'>
+<Navbar />
+</div>
     <div className="min-h-screen bg-gray-100 flex flex-col justify-start items-center">
       <form onSubmit={handleSubmit}>
       <h1 className="text-3xl font-bold text-center mt-8 mb-4">Welcome! Let's create your profile</h1>
@@ -148,6 +152,7 @@ const WelcomePage = () => {
       <button disabled={disabled} className={` ${ disabled ? 'bg-pink-400' : 'bg-pink-600' } text-xs mt-12  text-white py-[8px] rounded-md w-[8vw] `}>Next</button>
       </div>
       </form>
+    </div>
     </div>
   );
 };

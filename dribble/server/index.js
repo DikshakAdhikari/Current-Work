@@ -37,7 +37,7 @@ app.get('/:id', async(req,res)=> {
         address:process.env.EMAIL
       },  
       to: `${emailId}`, 
-      subject: "Hello ✔", 
+      subject: "Hello ", 
       text: "Thank you", 
       // html: "<b>Thank you</b>", 
     });
