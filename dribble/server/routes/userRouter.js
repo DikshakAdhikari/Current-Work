@@ -9,8 +9,9 @@ userRouter.post('/', async (req,res)=> {
             name, username, email, password
         })
         await insertt.save()
-        const user= await userModel.findOne({email})
-        res.status(200).json({userId:user._id})
+        res.json("dim  dim")
+        // const user= await userModel.findOne({email})
+        // res.status(200).json({userId:user._id})
     }catch(err){
     }
 })
