@@ -9,12 +9,12 @@ dotenv.config()
 const app= express()
 mongooseConnect()
 
+
 app.use(cors({
   origin: "http://localhost:3000"
 }))
 
 app.use(express.json())
-
 const transporter = nodemailer.createTransport({
   service:'gmail',
   host: "smtp.gmail.com",
