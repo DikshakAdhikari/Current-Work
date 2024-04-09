@@ -22,6 +22,19 @@ app.get('/', async(req,res)=> {
   res.json("hello everyone!!")
 })
 
+app.post('/im', async(req,res)=> {
+  try{
+    const {name, username, email, password}= req.body;
+    const insertt= await userModel.create({
+        name, username, email, password
+    })
+    await insertt.save()
+    const user= await userModel.findOne({email})
+    res.status(200).json({userId:user._id})
+}catch(err){
+}
+})
+
 
 const transporter = nodemailer.createTransport({
   service:'gmail',
