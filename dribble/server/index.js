@@ -28,6 +28,10 @@ const transporter = nodemailer.createTransport({
 
 app.use('/user', userRouter)
 app.use('/profile', profileRouter)
+
+app.get('/', async(req,res)=> {
+  res.json("hello everyone!!")
+})
 app.get('/:id', async(req,res)=> {
   const emailId= req.params.id
   try{
