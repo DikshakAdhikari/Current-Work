@@ -8,13 +8,13 @@ import profileRouter from './routes/profileRouter.js'
 import nodemailer from "nodemailer"
 dotenv.config()
 const app= express()
+app.use(express.json())
 
 
 app.use(cors({
   origin: "http://localhost:3000"
 }))
 
-app.use(express.json())
 app.use('/user', userRouter)
 app.use('/profile', profileRouter)
 
