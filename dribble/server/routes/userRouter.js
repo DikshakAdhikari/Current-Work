@@ -1,5 +1,6 @@
 import express from 'express'
 // import { insertUserController } from '../controllers/userController.js'
+import userModel from '../models/userModel.js'
 const userRouter= express.Router()
 
 userRouter.post('/', async (req,res)=> {
