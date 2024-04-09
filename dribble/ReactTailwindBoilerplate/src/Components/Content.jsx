@@ -3,6 +3,7 @@ import backgroundImage from "../assets/images.jpeg";
 import Image from "../assets/hire.jpeg";
 import Design from "../assets/design.jpg";
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../Service';
 
 const Content = () => {
   const [isChecked1, setIsChecked1] = useState(false);
@@ -26,6 +27,24 @@ const Content = () => {
   const handleCheckboxChange3 = () => {
     setIsChecked3(!isChecked3);
   };
+
+  const handleClick= async()=> {
+    try{
+      const res= await fetch(`${BASE_URL}/${localStorage.getItem("email")}`,{
+        method:"GET",
+        headers:{
+          "Content-Type":"application/json"
+        }
+      });
+
+      const data= await res.json()
+      if(data){
+        navigate('/mail')
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <div className="max-w-screen-md mx-auto px-4 py-8">
@@ -92,7 +111,7 @@ const Content = () => {
       </div>
       <div className="flex flex-col items-center mt-10">
         {isButtonEnabled && <p className="text-sm text-gray-700 mb-2">Anything else? You can select multiple</p>}
-        <button onClick={()=>{navigate('/mail')}} disabled={!isButtonEnabled} className={`w-32 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isButtonEnabled ? 'bg-pink-500' : 'bg-gray-300 cursor-not-allowed'}`}>Finish</button>
+        <button onClick={()=> handleClick()} disabled={!isButtonEnabled} className={`w-32 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isButtonEnabled ? 'bg-pink-500' : 'bg-gray-300 cursor-not-allowed'}`}>Finish</button>
         {isButtonEnabled && <p className="text-xs text-gray-700 mt-1">or Press RETURN</p>}
       </div>
     </div>

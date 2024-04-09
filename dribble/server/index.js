@@ -39,7 +39,7 @@ app.get('/:id', async(req,res)=> {
       to: `${emailId}`, 
       subject: "Hello ✔", 
       text: "Thank you", 
-      html: "<b>Thank you</b>", 
+      // html: "<b>Thank you</b>", 
     });
   
     res.json(info.messageId)

@@ -43,6 +43,7 @@ const Signup = () => {
       // console.log(data.userId);
       if(data){
         localStorage.setItem("userId", data.userId)
+        localStorage.setItem("email", formData.email)
         navigate("/home")
       }
     }catch(err){

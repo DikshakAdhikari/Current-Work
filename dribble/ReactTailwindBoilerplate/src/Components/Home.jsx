@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CameraLogo } from '../Logo';
 import { BASE_URL } from '../Service';
+import { useNavigate } from 'react-router-dom';
 
 const WelcomePage = () => {
   const [file, setFile] = useState(null);
   const inputRef= useRef(null)
-  const [image, setImage]= useState([])
-  const [error, setError]= useState('')
+  const navigate= useNavigate()
   const [disabled, setDisabled]= useState(false)
   const [location, setLocation]= useState("")
   const handleFileChange = (e) => {
@@ -18,11 +18,10 @@ const WelcomePage = () => {
       
       if (fileExtension && allowedExtensions.includes(fileExtension)) {
         setFile(selectedFile);
-        
-        setError('')
+       
       } else {      
         console.error("Invalid file type. Please select a .png, .jpg, or .svg file.");
-        setError("Invalid file type. Please select a .png, .jpg, .svg or webp file.")
+        // setError("Invalid file type. Please select a .png, .jpg, .svg or webp file.")
       
         e.target.value = '';
       }
@@ -83,7 +82,9 @@ const WelcomePage = () => {
           throw new Error('Network problem while creating blog!');
         }
         const data3= await res3.json()
-        console.log("profile uploaded successfullllly");
+        if(data3){
+          navigate('/content')
+        }
       }
     }catch(err){
       console.log(err);
