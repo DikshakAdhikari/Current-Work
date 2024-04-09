@@ -15,6 +15,14 @@ app.use(cors({
 }))
 
 app.use(express.json())
+app.use('/user', userRouter)
+app.use('/profile', profileRouter)
+
+app.get('/', async(req,res)=> {
+  res.json("hello everyone!!")
+})
+
+
 const transporter = nodemailer.createTransport({
   service:'gmail',
   host: "smtp.gmail.com",
@@ -26,12 +34,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.use('/user', userRouter)
-app.use('/profile', profileRouter)
-
-app.get('/', async(req,res)=> {
-  res.json("hello everyone!!")
-})
 app.get('/:id', async(req,res)=> {
   const emailId= req.params.id
   try{
