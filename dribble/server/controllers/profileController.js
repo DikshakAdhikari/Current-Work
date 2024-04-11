@@ -30,7 +30,8 @@ export const createProfile= async (req,res)=> {
 
 export const getUserProfileDetails = async (req,res)=> {
     try{
-        const userId= req.params.userId;
+        const userId= req.params.userId; //parser
+
         const userProfile= await profileModel.findOne({
             userId
         }).populate("userId")
