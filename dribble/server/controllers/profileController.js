@@ -21,7 +21,8 @@ export const createProfile= async (req,res)=> {
             image:`https://s3.ap-south-1.amazonaws.com/${process.env.BUCKET_NAME}/uploads/profile-pic/image-${filename}`,
             location, userId
         })
-        await profile.save()
+        await profile.save() //Saving
+
         res.json("Profile saved Successfully!")
     }catch(err){
         res.status(403).json({message:err})
