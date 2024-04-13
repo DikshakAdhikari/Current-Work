@@ -52,7 +52,6 @@ const page = () => {
     })
   })
 
-  // console.log("notiiii", notifications);
 
 
   useEffect(()=> {
