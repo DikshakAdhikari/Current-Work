@@ -73,8 +73,7 @@ io.on('connection', async (socket)=> {
             users.push({
                 userId: newUser.id,
                 socketId: newUser.socketId
-            }); 
-           
+            });         
         }
         onlineUsers.set(newUser.id, newUser.socketId)
         // console.log(users);
