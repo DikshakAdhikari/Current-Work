@@ -30,8 +30,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
-
 app.post('/signup', async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -51,7 +49,6 @@ app.post('/signup', async (req: Request, res: Response) => {
     });
 
     await newUser.save();
-    
     //@ts-ignore
     await sendOtpVerificationEmail(newUser , res)
 
