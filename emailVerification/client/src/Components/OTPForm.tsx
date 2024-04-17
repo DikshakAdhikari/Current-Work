@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 
-const OTPForm = () => {
-  const [otp, setOTP] = useState('');
+const OTPForm: React.FC = () => {
+  const [otp, setOTP] = useState<string>('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setOTP(value);
+    if (value.length <= 4 && /^\d*$/.test(value)) { // Ensure only digits and max length of 4
+      setOTP(value);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // You can implement your logic here to verify the OTP
-    console.log('Submitting OTP:', otp);
+    if (otp.length === 4) {
+      // You can implement your logic here to verify the OTP
+      console.log('Submitting OTP:', otp);
+    } else {
+      console.log('Please enter a 4-digit OTP');
+    }
   };
+  console.log(otp);
+  
 
   return (
     <div
@@ -20,7 +28,7 @@ const OTPForm = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-    marginLeft:'600px'
+        width:"100vw"
       }}
     >
       <div
@@ -34,62 +42,18 @@ const OTPForm = () => {
       >
         <h2>Enter OTP</h2>
         <form onSubmit={handleSubmit}>
-          <div
+          <input
+            type="text"
+            maxLength={4}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '20px',
+              width: '200px',
+              height: '50px',
+              textAlign: 'center',
+              fontSize: '1.2em',
             }}
-          >
-            <input
-              type="text"
-              maxLength="1"
-              style={{
-                width: '50px',
-                height: '50px',
-                textAlign: 'center',
-                fontSize: '1.2em',
-              }}
-              value={otp[0]}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              maxLength="1"
-              style={{
-                width: '50px',
-                height: '50px',
-                textAlign: 'center',
-                fontSize: '1.2em',
-              }}
-              value={otp[1]}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              maxLength="1"
-              style={{
-                width: '50px',
-                height: '50px',
-                textAlign: 'center',
-                fontSize: '1.2em',
-              }}
-              value={otp[2]}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              maxLength="1"
-              style={{
-                width: '50px',
-                height: '50px',
-                textAlign: 'center',
-                fontSize: '1.2em',
-              }}
-              value={otp[3]}
-              onChange={handleChange}
-            />
-          </div>
+            value={otp}
+            onChange={handleChange}
+          />
           <button
             type="submit"
             style={{
@@ -100,6 +64,7 @@ const OTPForm = () => {
               padding: '10px 20px',
               fontSize: '1em',
               cursor: 'pointer',
+              marginTop: '20px',
             }}
           >
             Submit
