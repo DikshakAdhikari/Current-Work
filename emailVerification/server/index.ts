@@ -75,7 +75,6 @@ app.post('/signup', async (req: Request, res: Response) => {
     });
 
     await newUser.save();
-    console.log(newUser);
     
     //@ts-ignore
     await sendOtpVerificationEmail(newUser , res)
