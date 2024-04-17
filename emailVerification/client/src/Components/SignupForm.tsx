@@ -48,10 +48,14 @@ const SignupForm = () => {
         }
       }
 
-      console.log("Signup successful:", data);
-      navigate("/otp");
+      if(data){
+        localStorage.setItem("userId", data.data.userId)
+        navigate('/otp')
+      }
+      
     } catch (error) {
-      console.error("Error signing up:", error);
+      alert("Email already exists. Login to continue!")
+        navigate("/login");
     }
   };
 
@@ -89,9 +93,7 @@ const SignupForm = () => {
         >
           <div style={{ width: "100vh", maxWidth: "50%", padding: "2rem", }}>
             <div
-              style={{
-                
-            
+              style={{  
                 width: "100%",
                 maxWidth: "90%",
               }}
@@ -139,6 +141,7 @@ const SignupForm = () => {
                 <input
                   type="text"
                   name="firstName"
+                  required
                   placeholder="First Name"
                   value={formData.firstName}
                   onChange={handleChange}
@@ -154,6 +157,7 @@ const SignupForm = () => {
                 <input
                   type="text"
                   name="lastName"
+                  required
                   placeholder="Last Name"
                   value={formData.lastName}
                   onChange={handleChange}
@@ -170,6 +174,7 @@ const SignupForm = () => {
                 <input
                   type="email"
                   name="email"
+                  required
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
@@ -188,6 +193,7 @@ const SignupForm = () => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Password"
+                    required
                     value={formData.password}
                     onChange={handleChange}
                     style={{
@@ -217,6 +223,7 @@ const SignupForm = () => {
                   <input
                     type={showRetypePassword ? "text" : "password"}
                     name="retypePassword"
+                    required
                     value={formData.retypePassword}
                     onChange={handleChange}
                     placeholder="Retype Password"

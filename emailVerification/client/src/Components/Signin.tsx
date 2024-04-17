@@ -115,6 +115,7 @@ const Signin = () => {
                 <input
                   type="email"
                   name="email"
+                  required
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
@@ -133,6 +134,7 @@ const Signin = () => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Password"
+                    required
                     value={formData.password}
                     onChange={handleChange}
                     style={{

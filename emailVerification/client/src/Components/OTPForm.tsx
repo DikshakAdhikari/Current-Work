@@ -1,7 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const OTPForm: React.FC = () => {
   const [otp, setOTP] = useState<string>('');
+  const navigate= useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -10,16 +12,36 @@ const OTPForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const userId= localStorage.getItem("userId");
+
     if (otp.length === 4) {
-      // You can implement your logic here to verify the OTP
-      console.log('Submitting OTP:', otp);
+      const res= await fetch("http://localhost:5001/verifyOtp",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+          userId, otp
+        })
+      });
+      if(!res.ok){
+        throw new Error("Network problem!");
+      }
+      const data= await res.json();
+      if(data.status === "VERIFIED"){
+        console.log(data);
+        navigate('/home')
+      }else{
+        alert("Wrong/empty password, Signup again!")
+        navigate("/")
+      }
+      
     } else {
       console.log('Please enter a 4-digit OTP');
     }
   };
-  console.log(otp);
   
 
   return (
