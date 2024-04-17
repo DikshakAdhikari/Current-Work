@@ -30,39 +30,15 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.get('/:id', async(req,res)=> {
-  const emailId= req.params.id
-  try{
-    const info = await transporter.sendMail({
-      from: {
-        name: 'Test',
-        //@ts-ignore
-        address:process.env.EMAIL
-      },  
-      to: `${emailId}`, 
-      subject: "Hello ", 
-      text: "Thank you", 
-      // html: "<b>Thank you</b>", 
-    });
-  //@ts-ignore
-    res.json(info.messageId)
-  }catch(err){
-    res.status(403).json({message:err})
-  }
- 
-})
+
 
 app.post('/signup', async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-
-   
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    
+    } 
     const hashedPassword = await bcrypt.hash(password, 10); 
 
     
