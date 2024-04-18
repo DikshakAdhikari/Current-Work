@@ -17,7 +17,7 @@ app.use(cors({
 app.use("/user", UserRouter)
 app.use("/otp", OtpRouter )
 app.get('/', (req,res)=> {
-  res.send("Hello there!")
+  res.json("Hello there!")
 })
 
 
