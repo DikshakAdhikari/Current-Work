@@ -9,7 +9,6 @@ mongooseConnect();
 
 const app = express();
 app.use(express.json())
-const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: 'http://localhost:5173'
 }));
@@ -21,6 +20,6 @@ app.get('/', (req,res)=> {
 })
 
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
