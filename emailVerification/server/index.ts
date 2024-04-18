@@ -13,8 +13,8 @@ app.use(cors({
   origin: 'http://localhost:5173'
 }));
 
-app.use("/user", UserRouter)
 app.use("/otp", OtpRouter )
+app.use("/user", UserRouter)
 app.get('/', (req,res)=> {
   res.json("Hello there!")
 })
