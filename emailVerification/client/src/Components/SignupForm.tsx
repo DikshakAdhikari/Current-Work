@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react"; 
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/pic.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { BASE_URL } from "../Services";
+
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  retypePassword: string;
+  contactMode: string;
+}
+
 const SignupForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({ 
     firstName: "",
     lastName: "",
     email: "",
@@ -12,19 +24,19 @@ const SignupForm = () => {
     retypePassword: "",
     contactMode: "",
   });
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRetypePassword, setShowRetypePassword] = useState(false);
+  const [error, setError] = useState<string>(""); 
+  const [showPassword, setShowPassword] = useState<boolean>(false); 
+  const [showRetypePassword, setShowRetypePassword] = useState<boolean>(false); 
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => { 
     event.preventDefault();
-    // Check if passwords match
+    
     if (formData.password !== formData.retypePassword) {
       setError("Passwords don't match");
       return;
     }
     try {
-      const response = await fetch("http://localhost:5001/signup", {
+      const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,24 +54,23 @@ const SignupForm = () => {
           response.status === 400 &&
           data.message === "Email already exists"
         ) {
-          setError(data.message); // Set error message specifically for existing email
+          setError(data.message); 
         } else {
-          throw new Error(data.message); // Throw error for other cases
+          throw new Error(data.message); 
         }
       }
 
-      if(data){
-        localStorage.setItem("userId", data.data.userId)
-        navigate('/otp')
+      if (data) {
+        localStorage.setItem("userId", data.data.userId);
+        navigate('/otp');
       }
-      
     } catch (error) {
-      alert("Email already exists. Login to continue!")
-        navigate("/login");
+      alert("Email already exists. Login to continue!");
+      navigate("/login");
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => { 
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -76,14 +87,14 @@ const SignupForm = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div >
+      <div>
         <img
           src={backgroundImage}
           alt="nice"
-          style={{ width: "100%", height: "100vh",marginLeft:'80px' }}
+          style={{ width: "100%", height: "100vh", marginLeft: '80px' }}
         />
       </div>
-      <div style={{ width: "100%",display:'flex',justifyContent:'center',alignItems:'center', }}>
+      <div style={{ width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
         <div
           style={{
             display: "flex",
@@ -93,7 +104,7 @@ const SignupForm = () => {
         >
           <div style={{ width: "100vh", maxWidth: "50%", padding: "2rem", }}>
             <div
-              style={{  
+              style={{
                 width: "100%",
                 maxWidth: "90%",
               }}
@@ -129,12 +140,11 @@ const SignupForm = () => {
                       fontSize: "1.875rem",
                       fontWeight: "bold",
                       color: "#3a2a4a",
-                      cursor:'pointer'
+                      cursor: 'pointer'
                     }}
                     onClick={() => navigate('/login')}
-
                   >
-                    Sign 
+                    Sign
                     <span style={{ color: "red" }}> In</span>
                   </h2>
                 </div>

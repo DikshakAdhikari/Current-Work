@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../Services';
 
 const OTPForm: React.FC = () => {
   const [otp, setOTP] = useState<string>('');
@@ -17,7 +18,7 @@ const OTPForm: React.FC = () => {
     const userId= localStorage.getItem("userId");
 
     if (otp.length === 4) {
-      const res= await fetch("http://localhost:5001/verifyOtp",{
+      const res= await fetch(`${BASE_URL}/verifyOtp`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
