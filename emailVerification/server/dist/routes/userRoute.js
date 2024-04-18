@@ -41,57 +41,84 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var user_1 = require("../models/user");
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var router = express_1.default.Router();
-var secret = 'secret';
-router.post('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, data, err_1;
+var bcrypt_1 = __importDefault(require("bcrypt"));
+var otpVerification_1 = require("../services/otpVerification");
+var UserRouter = express_1.default.Router();
+UserRouter.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, firstName, lastName, email, password, existingUser, userToDelete, hashedPassword, newUser, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                _a = req.body, email = _a.email, password = _a.password;
-                return [4 /*yield*/, user_1.userModel.create({ email: email, password: password })];
+                _b.trys.push([0, 8, , 9]);
+                _a = req.body, firstName = _a.firstName, lastName = _a.lastName, email = _a.email, password = _a.password;
+                return [4 /*yield*/, user_1.User.findOne({ email: email })];
             case 1:
-                data = _b.sent();
-                data.save();
-                res.status(200).json("User registered successfully!");
-                return [3 /*break*/, 3];
+                existingUser = _b.sent();
+                if (!existingUser) return [3 /*break*/, 4];
+                if (!(existingUser.emailVerified === true)) return [3 /*break*/, 2];
+                return [2 /*return*/, res.status(400).json({ message: 'Email already exists' })];
             case 2:
-                err_1 = _b.sent();
-                res.status(404).json(err_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                console.log("exx", existingUser);
+                return [4 /*yield*/, user_1.User.deleteMany({ email: email })];
+            case 3:
+                userToDelete = _b.sent();
+                _b.label = 4;
+            case 4: return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
+            case 5:
+                hashedPassword = _b.sent();
+                newUser = new user_1.User({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: hashedPassword,
+                    emailVerified: false
+                });
+                return [4 /*yield*/, newUser.save()];
+            case 6:
+                _b.sent();
+                //@ts-ignore
+                return [4 /*yield*/, (0, otpVerification_1.sendOtpVerificationEmail)(newUser, res)];
+            case 7:
+                //@ts-ignore
+                _b.sent();
+                return [3 /*break*/, 9];
+            case 8:
+                error_1 = _b.sent();
+                console.error('Error creating user:', error_1);
+                res.status(500).json({ message: 'Internal server error' });
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); });
-router.post('/signin', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, user, token, err_2;
+UserRouter.post('/signin', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, email, password, user, isPasswordValid, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
+                _b.trys.push([0, 3, , 4]);
                 _a = req.body, email = _a.email, password = _a.password;
-                return [4 /*yield*/, user_1.userModel.matchPassword(email, password)];
+                return [4 /*yield*/, user_1.User.findOne({ email: email })];
             case 1:
                 user = _b.sent();
-                console.log(user);
                 if (!user) {
-                    return [2 /*return*/, res.status(400).json('User does not exist!')];
+                    return [2 /*return*/, res.status(401).json({ message: 'Invalid email or password' })];
                 }
-                if (!process.env.SECRET_KEY) {
-                    return [2 /*return*/, res.sendStatus(403)];
-                }
-                token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: "1h" });
-                console.log(token);
-                res.status(200).json(token);
-                return [3 /*break*/, 3];
+                return [4 /*yield*/, bcrypt_1.default.compare(password, user.password)];
             case 2:
-                err_2 = _b.sent();
-                res.status(400).json(err_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                isPasswordValid = _b.sent();
+                if (!isPasswordValid) {
+                    return [2 /*return*/, res.status(401).json({ message: 'Invalid email or password' })];
+                }
+                res.status(200).json({ message: 'Signin successful' });
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _b.sent();
+                console.error('Error signing in:', error_2);
+                res.status(500).json({ message: 'Internal server error' });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
-exports.default = router;
+exports.default = UserRouter;
