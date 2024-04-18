@@ -22,7 +22,7 @@ const Signin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`${BASE_URL}/signin`, {
+      const response = await fetch(`${BASE_URL}/user/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

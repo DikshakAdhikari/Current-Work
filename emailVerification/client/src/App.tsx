@@ -9,8 +9,7 @@ import OTPForm from './Components/OTPForm';
 const App = () => {
   return (
     <div >
-      <Router>
-        
+      <Router>   
         <Routes>
           <Route path="/" element={<SignupForm />} />
           <Route path="/home" element={<Home />} />

@@ -18,7 +18,7 @@ const OTPForm: React.FC = () => {
     const userId= localStorage.getItem("userId");
 
     if (otp.length === 4) {
-      const res= await fetch(`${BASE_URL}/verifyOtp`,{
+      const res= await fetch(`${BASE_URL}/otp/verifyOtp`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
@@ -31,8 +31,8 @@ const OTPForm: React.FC = () => {
         throw new Error("Network problem!");
       }
       const data= await res.json();
+      
       if(data.status === "VERIFIED"){
-        console.log(data);
         navigate('/home')
       }else{
         alert("Wrong/empty password, Signup again!")
