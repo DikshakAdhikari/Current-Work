@@ -32,4 +32,4 @@ var UserSchema = new mongoose_1.Schema({
     password: { type: String, required: true },
     emailVerified: { type: Boolean, default: false },
 });
-exports.User = mongoose_1.default.model('User', UserSchema);
+exports.User = mongoose_1.default.model('Userr', UserSchema);

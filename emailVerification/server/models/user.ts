@@ -17,4 +17,4 @@ const UserSchema: Schema = new Schema({
   emailVerified: { type: Boolean, default: false },
 });
 
-export const User = mongoose.model<UserInterface>('User', UserSchema);
+export const User = mongoose.model<UserInterface>('Userr', UserSchema);
