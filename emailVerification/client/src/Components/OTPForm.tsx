@@ -21,6 +21,7 @@ const OTPForm: React.FC = () => {
       const res= await fetch(`${BASE_URL}/otp/verifyOtp`,{
         method:"POST",
         headers:{
+          
           "Content-Type":"application/json"
         },
         body: JSON.stringify({
