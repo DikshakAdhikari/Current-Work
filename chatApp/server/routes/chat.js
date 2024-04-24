@@ -32,9 +32,6 @@ chatRouter.post('/getChats', async(req,res)=> {
         //     }
         // }))
 
-
-
-
         res.json(chats)
     }catch(err){
         res.json({message:err})
