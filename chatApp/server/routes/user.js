@@ -29,20 +29,20 @@ userRouter.post('/',async(req,res)=> {
     }
 })
 
-userRouter.post('/signin',async(req,res)=> {
-    try{
-        const { email, password}= req.body;
-        const user= await USER.findOne({email});
-        if(!user){
-            return res.status(403).json("User not registered!")
-        }
-        const token= jwt.sign({id:user._id, username:user.username, email:user.email}, "secret" ) 
-        res.json({token, userId:user._id, username:user.username})
+// userRouter.post('/signin',async(req,res)=> {
+//     try{
+//         const { email, password}= req.body;
+//         const user= await USER.findOne({email});
+//         if(!user){
+//             return res.status(403).json("User not registered!")
+//         }
+//         const token= jwt.sign({id:user._id, username:user.username, email:user.email}, "secret" ) 
+//         res.json({token, userId:user._id, username:user.username})
 
-    }catch(err){
-        res.status(403).json(err)
-    }
-})
+//     }catch(err){
+//         res.status(403).json(err)
+//     }
+// })
 
 
 // userRouter.get('/all/:userId', verifyToken, async(req,res)=> {
