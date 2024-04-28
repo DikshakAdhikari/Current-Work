@@ -26,11 +26,11 @@ chatRouter.post('/getChats', async(req,res)=> {
             chats.push(obj);  
         });
 
-        // await Promise.all(data.map(async(val)=> {
-        //     if(val.sender.toString() !== from){
-        //         await CHAT.findOneAndUpdate({_id:val._id},{seen:true})
-        //     }
-        // }))
+        await Promise.all(data.map(async(val)=> {
+            if(val.sender.toString() !== from){
+                await CHAT.findOneAndUpdate({_id:val._id},{seen:true})
+            }
+        }))
 
         res.json(chats)
     }catch(err){
