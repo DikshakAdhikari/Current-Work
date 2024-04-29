@@ -38,24 +38,24 @@ chatRouter.post('/getChats', async(req,res)=> {
     }
 });
 
-chatRouter.post('/unseen', async(req,res)=> {
-    try{
-        const seenChatCount = await CHAT.countDocuments({
-            $expr: { $gt: [{ $size: "$timestamp" }, 0] }
-        });
+// chatRouter.post('/unseen', async(req,res)=> {
+//     try{
+//         const seenChatCount = await CHAT.countDocuments({
+//             $expr: { $gt: [{ $size: "$timestamp" }, 0] }
+//         });
         
-        console.log('seen count',seenChatCount);
-        const totalChatsCount = await CHAT.find().countDocuments();
-        console.log('total', totalChatsCount);
-        const unseenMessages= totalChatsCount - seenChatCount;
-        console.log('unseenCount',unseenMessages);
-        res.json(unseenMessages)
+//         console.log('seen count',seenChatCount);
+//         const totalChatsCount = await CHAT.find().countDocuments();
+//         console.log('total', totalChatsCount);
+//         const unseenMessages= totalChatsCount - seenChatCount;
+//         console.log('unseenCount',unseenMessages);
+//         res.json(unseenMessages)
 
         
-    }catch(err){
-        res.json(err)
-    }
-})
+//     }catch(err){
+//         res.json(err)
+//     }
+// })
 
 
 chatRouter.post('/' , async(req,res)=> {
