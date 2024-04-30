@@ -110,4 +110,6 @@ chatRouter.post('/updateSeen', async (req,res)=> {
         res.json(err)
     }
 })
+
+//router
 module.exports= chatRouter
