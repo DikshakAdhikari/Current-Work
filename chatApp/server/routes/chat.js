@@ -111,5 +111,5 @@ chatRouter.post('/updateSeen', async (req,res)=> {
     }
 })
 
-//router
+//router connected
 module.exports= chatRouter
