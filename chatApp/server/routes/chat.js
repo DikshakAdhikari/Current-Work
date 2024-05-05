@@ -96,6 +96,8 @@ chatRouter.get('/:chatId', async (req,res)=> {
     }catch(err){
         console.log(err);
     }
+
+    
 })
 
 chatRouter.post('/updateSeen', async (req,res)=> {
