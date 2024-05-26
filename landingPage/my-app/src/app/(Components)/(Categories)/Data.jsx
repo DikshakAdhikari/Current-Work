@@ -1,4 +1,9 @@
 
+export const categoryOptions= [
+    "Mehendi", "Venues", "Bridal wear", "Photographer", "Groom wear", "Pandits", "food", "Grooming"
+]
+
+
 export const bridalWearData = [
     {
       id: 1,
