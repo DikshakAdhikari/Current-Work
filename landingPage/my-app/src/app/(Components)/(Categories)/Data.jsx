@@ -8,7 +8,7 @@ export const bridalWearData = [
     {
       id: 1,
       brand: 'Moroso',
-      imgSrc: 'path-to-image1.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: true
@@ -16,7 +16,7 @@ export const bridalWearData = [
     {
       id: 2,
       brand: 'Artemide',
-      imgSrc: 'path-to-image2.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
@@ -24,7 +24,7 @@ export const bridalWearData = [
     {
       id: 3,
       brand: 'Vitra',
-      imgSrc: 'path-to-image3.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
@@ -32,7 +32,7 @@ export const bridalWearData = [
     {
       id: 4,
       brand: 'Salvatori',
-      imgSrc: 'path-to-image4.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
@@ -40,7 +40,7 @@ export const bridalWearData = [
     {
       id: 5,
       brand: 'Artemide',
-      imgSrc: 'path-to-image5.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
@@ -48,7 +48,7 @@ export const bridalWearData = [
     {
       id: 6,
       brand: 'Salvatori',
-      imgSrc: 'path-to-image6.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
@@ -56,7 +56,7 @@ export const bridalWearData = [
     {
       id: 7,
       brand: 'Moroso',
-      imgSrc: 'path-to-image7.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
@@ -64,7 +64,7 @@ export const bridalWearData = [
     {
       id: 8,
       brand: 'Vitra',
-      imgSrc: 'path-to-image8.jpg',
+      imgSrc: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
       title: 'Lorem Ipsum',
       description: 'Lorem ipsum dolor sit amet, conassetetur adipiscing elit.',
       highlight: false
