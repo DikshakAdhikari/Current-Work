@@ -14,11 +14,11 @@ import { BsTelegram } from "react-icons/bs";
 const Footer = () => {
   return (
     <section className=" bg-green-950 mt-4 flex flex-col">
-     <div className=" flex pb-5 pt-12">
-        <div className=" w-[30%]">
-            <div className=" flex flex-col items-center gap-4">
+     <div className=" flex pb-10 pt-12">
+        <div className=" w-[30%] pl-10">
+            <div className=" flex flex-col items-center gap-8">
                 <div className=" text-3xl text-white mx-12">LOGO</div>
-                <div className=" text-white w-72 text-center text-sm">Lorium ipsum suom duno timst gitim. Livo dimneuiom austimetium.</div>
+                <div className=" text-gray-200 w-72 text-center text-sm">Lorium ipsum suom duno timst gitim. Livo dimneuiom austimetium.</div>
                 <div className=" flex gap-3 text-gray-300 h-auto items-center">
                     <AiOutlineTwitter className=" w-6 h-auto" />
                     <AiFillInstagram className=" w-6 h-auto" />
@@ -27,38 +27,38 @@ const Footer = () => {
                 </div>
             </div>
         </div>
-        <div className=" flex gap-44 justify-center  w-[100%]">
+        <div className=" flex gap-28 pl-36 w-[100%]">
             <div className=" flex flex-col gap-2"> 
-              <div className=" text-white font-bold ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 font-bold ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
             </div>
             <div className=" flex flex-col gap-2"> 
-              <div className=" text-white font-bold ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 font-bold ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
             </div>
             <div className=" flex flex-col gap-2"> 
-              <div className=" text-white font-bold ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 font-bold ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
             </div>
             <div className=" flex flex-col gap-2"> 
-              <div className=" text-white font-bold ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
-              <div className=" text-white text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 font-bold ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
+              <div className="  text-gray-300 text-sm ">Lorem ipsum</div>
             </div>
         </div>
      </div>
