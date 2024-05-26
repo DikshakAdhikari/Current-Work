@@ -23,7 +23,9 @@ const Categories = () => {
         <div>
           <ShowCategoryInfo titleIndex={titleIndex} />
         </div>
-     
+  
+          <button className=' rounded-md border-2 border-gray-600 text-sm px-5 py-2'>View All</button>
+    
     </div>
   )
 }
