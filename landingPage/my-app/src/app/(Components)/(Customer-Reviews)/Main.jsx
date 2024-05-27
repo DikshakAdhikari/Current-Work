@@ -22,7 +22,7 @@ const MainComponent = () => {
     <div className=' flex flex-col my-24 items-center  '>
         <div className=' flex w-[70vw] mb-8 justify-between m-3'>
             <div className='text-5xl w-[45%] flex gap-2 font-semibold '>
-                <div className=' '>""</div> 
+                <div className=' '>&#8220;</div> 
                 <div className=''> What Our Customer are Saying</div>
             </div>
             <div className=' flex gap-3 text-4xl font-semibold items-center'>

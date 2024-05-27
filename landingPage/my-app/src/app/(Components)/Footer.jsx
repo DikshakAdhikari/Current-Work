@@ -11,7 +11,7 @@ import { BsTelegram } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <section className=" bg-green-950 mt-4 flex flex-col">
+    <section className=" bg-green-950 pt-4 flex flex-col">
      <div className=" flex pb-10 pt-12">
         <div className=" w-[30%] pl-10">
             <div className=" flex flex-col items-center gap-8">

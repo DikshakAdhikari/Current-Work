@@ -5,17 +5,17 @@ const venues = [
   {
     name: 'Udaipur',
     description: 'Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet.',
-    imageUrl: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
+    imageUrl: "https://d27k8xmh3cuzik.cloudfront.net/wp-content/uploads/2017/03/A-wedding-going-on-at-Oberoi-Udaivilas-in-Udaipur.jpg",
   },
   {
     name: 'Jaipur',
     description: 'Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet.',
-    imageUrl: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
+    imageUrl: "https://cdn0.weddingwire.in/article/7845/3_2/960/jpg/5487-jaibagh-palace-jaibaghpalace-lead1.jpeg",
   },
   {
     name: 'Jodhpur',
     description: 'Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet.',
-    imageUrl: "https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg",
+    imageUrl: "https://static.toiimg.com/thumb/width-600,height-400,msid-42810873.cms",
   },
  
 ];
@@ -32,15 +32,11 @@ const Carousel = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto p-4">
-      <h2 className="text-4xl font-bold text-center mb-8">Top Wedding Venues</h2>
+   
+    <div className="w-full mt-16 py-8 px-14 max-w-4xl mx-auto ">
+      <h2 className="text-5xl font-semibold text-center mb-8">Top Wedding Venues</h2>
       <div className="flex items-center justify-between">
-        <button
-          onClick={prevSlide}
-          className="bg-yellow-500 text-white p-2 rounded-full"
-        >
-          &#8592;
-        </button>
+       
         <div className="flex-1 overflow-hidden relative">
           <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
             {venues.map((venue, index) => (
@@ -49,7 +45,7 @@ const Carousel = () => {
                   <img
                     src={venue.imageUrl}
                     alt={venue.name}
-                    className="w-full h-auto object-cover rounded-lg"
+                    className="w-[100vw] h-[50vh] object-cover rounded-lg"
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white rounded-b-lg">
                     <h3 className="text-2xl font-bold">{venue.name}</h3>
@@ -63,19 +59,27 @@ const Carousel = () => {
             ))}
           </div>
         </div>
+       
+      </div>
+      <div className="text-center mt-8">
+      <button
+          onClick={prevSlide}
+          className="  p-2  text-yellow-500 text-7xl"
+        >
+          &#8592;
+        </button>
         <button
           onClick={nextSlide}
-          className="bg-yellow-500 text-white p-2 rounded-full"
+          className=" p-2  text-yellow-500 text-7xl"
         >
           &#8594;
         </button>
       </div>
-      <div className="text-center mt-8">
-        <button className="bg-yellow-500 text-white py-2 px-4 rounded-full">
-          View All
-        </button>
+      <div className=' mt-3 justify-center flex w-[100%]'>
+      <button className=' rounded-md border-2 border-gray-600 text-sm px-5 py-2'>View All {"->"}</button>
       </div>
     </div>
+    
   );
 };
 

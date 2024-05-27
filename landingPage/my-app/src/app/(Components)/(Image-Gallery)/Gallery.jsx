@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 
 const images = [
-  { id: 1, src: 'https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg', alt: 'Description 1' },
-  { id: 2, src: 'https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg', alt: 'Description 2' },
-  { id: 3, src: 'https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg', alt: 'Description 3' },
-  { id: 4, src: 'https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg', alt: 'Description 4' },
-  { id: 5, src: 'https://kamatharjun.b-cdn.net/wp-content/uploads/2023/03/South-Indian-wedding-photography-PA-123.jpg', alt: 'Description 5' },
+  { id: 1, src: 'https://www.eventfaqs.com/Uploads/News/Content/whatsapp-image-2023-10-20-at-12.30.25-pm.jpg', alt: 'Description 1' },
+  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Indian_wedding_Delhi.jpg', alt: 'Description 2' },
+  { id: 3, src: 'https://www.thewedcafe.com/wp-content/uploads/2020/05/09-PRD_0113-Edit.jpg', alt: 'Description 3' },
+  { id: 4, src: 'https://meredithmckee.com/wp-content/uploads/2016/04/13-6739-post/1-Indian-Wedding-Photographer.jpg', alt: 'Description 4' },
+  { id: 5, src: 'https://static01.nyt.com/images/2023/05/14/multimedia/FAT-INDIAN-WEDDINGS-01-hptq/FAT-INDIAN-WEDDINGS-01-hptq-superJumbo.jpg', alt: 'Description 5' },
 ];
 
 

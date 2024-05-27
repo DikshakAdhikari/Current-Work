@@ -8,7 +8,7 @@ const Pagination = ({ value, index, limit, currentPage, setCurrentPage }) => {
       <div className=" font-serif text-4xl">{value.title}</div>
       <div className="  text-gray-700">{value.content}</div>
       <div className=" flex gap-5">
-        <img alt={value.id} src={value.image} className=" rounded-full w-16 h-16" />
+        <img alt={value.id} src={value.image} className=" object-cover rounded-full w-16 h-16" />
         <div className=" flex justify-center flex-col gap-1">
           <div className=" font-semibold text-lg">{value.name}</div>
           <div className=" text-gray-700">{value.designation}</div>
