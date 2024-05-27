@@ -4,7 +4,7 @@ import WeddingCard from "./WeddingCard";
 
 const WeddingVendors = () => {
   return (
-    <div className=" my-10">
+    <div className=" flex mt-10">
     <div className=" h-[70vh] w-[50vw] flex flex-col bg-orange-100">
       <div className=" flex flex-col  h-screen justify-center gap-4 ml-40 w-64">
           <div className=" text-4xl gap-3 font-bold ">Top Wedding Vendor Categories</div>
@@ -22,7 +22,7 @@ const WeddingVendors = () => {
         </button>
       </div>
     </div>
-    <div className=" relative bottom-[35rem] left-[34rem]">
+    <div className=" relative right-56 top-16">
     <WeddingCard />
     </div>
     </div>

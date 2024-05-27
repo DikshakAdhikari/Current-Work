@@ -3,19 +3,22 @@ import Categories from "./(Components)/(Categories)/Categories.jsx";
 import Navbar from "./(Components)/Navbar.jsx";
 import Footer from "./(Components)/Footer.jsx";
 import Carousel from "./(Components)/WeddingCarousel.jsx";
-import WeddingVendors from "./(Components)/(WeddingCategories)/WeddingVendors.jsx";
+import WeddingVendors from "./(Components)/(Wedding-Categories)/WeddingVendors.jsx";
+import MainComponent from "./(Components)/(Customer-Reviews)/Main.jsx";
+
 
 
 
 export default function Home() {
   return (
-   <div className=" bg-gray-200 flex flex-col justify-between">
+   <div className="  flex flex-col justify-between">
     <div>
     <Navbar />
     <CardInfo />
     <Categories />
     <Carousel />
     <WeddingVendors />
+    <MainComponent />
     </div>
     <Footer />
    </div>
