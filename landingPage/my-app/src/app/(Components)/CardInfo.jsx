@@ -21,7 +21,7 @@ const CardInfo = () => {
             </div>
             <div className=" flex justify-end">
               <button className=" bg-white px-5 py-2 text-sm rounded-md">
-                View results
+                View results 
               </button>
             </div>
           </div>
