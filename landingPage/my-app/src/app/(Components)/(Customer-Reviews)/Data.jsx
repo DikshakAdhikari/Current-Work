@@ -1,6 +1,7 @@
 
 export const customerData=  [
     {
+        id:1,
         name: "Pricillia Makalew",
         designation: "EhyaScaoe Client",
         title: 'Great Services with Good Quality Photographers PhotoScape',
@@ -9,6 +10,7 @@ export const customerData=  [
     },
 
     {
+        id:2,
         name: "Pricillia Makalew",
         designation: "EhyaScaoe Client",
         title: 'Great Services with Good Quality Photographers PhotoScape',
@@ -16,6 +18,7 @@ export const customerData=  [
         image:"https://res.cloudinary.com/liaison-inc/image/upload/f_auto/q_auto,w_1200/v1694101952/content/fash/fash-bride-and-groom-at-Indian-wedding.jpg"
     },
     {
+        id:3,
         name: "Pricillia Makalew",
         designation: "EhyaScaoe Client",
         title: 'Great Services with Good Quality Photographers PhotoScape',

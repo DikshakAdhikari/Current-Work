@@ -5,6 +5,7 @@ import Footer from "./(Components)/Footer.jsx";
 import Carousel from "./(Components)/WeddingCarousel.jsx";
 import WeddingVendors from "./(Components)/(Wedding-Categories)/WeddingVendors.jsx";
 import MainComponent from "./(Components)/(Customer-Reviews)/Main.jsx";
+import Gallery from "./(Components)/(Image-Gallery)/Gallery.jsx";
 
 
 
@@ -18,6 +19,7 @@ export default function Home() {
     <Categories />
     <Carousel />
     <WeddingVendors />
+    <Gallery />
     <MainComponent />
     </div>
     <Footer />

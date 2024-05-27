@@ -4,7 +4,7 @@ import WeddingCard from "./WeddingCard";
 
 const WeddingVendors = () => {
   return (
-    <div className=" flex mt-10">
+    <div className=" flex py-32">
     <div className=" h-[70vh] w-[50vw] flex flex-col bg-orange-100">
       <div className=" flex flex-col  h-screen justify-center gap-4 ml-40 w-64">
           <div className=" text-4xl gap-3 font-bold ">Top Wedding Vendor Categories</div>
