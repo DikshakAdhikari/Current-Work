@@ -3,7 +3,7 @@ const {ChatPromptTemplate} = require("@langchain/core/prompts");
 const { ChatGroq } = require("@langchain/groq");
 
 const model = new ChatGroq({
-  apiKey: '',
+  apiKey: ' ',
 });
 const prompt = ChatPromptTemplate.fromMessages([
   ["system", "You are a helpful assistant"],
