@@ -10,7 +10,6 @@ const jwt= require("jsonwebtoken")
 const PORT= 5000;
 const app = express();
 app.use(express.json())
-const server= createServer(app)
 app.use(cors({
     origin:"http://localhost:3000",
     credentials:true
