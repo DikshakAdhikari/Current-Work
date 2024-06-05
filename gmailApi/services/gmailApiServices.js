@@ -1,5 +1,9 @@
 const {google} = require('googleapis')
-const Queue= require("bull")
+const Queue= require('bull')
+
+const emailQueue = new Queue("emailQueue", {
+    redis: { port: 6379, host: "127.0.0.1" },
+  });
 
 async function listOfLabels(auth){
     const gmail= google.gmail({version: 'v1', auth});
@@ -111,8 +115,9 @@ async function test(auth){
             var body= JSON.parse(JSON.stringify(messageContent.data.payload.parts[0].parts[0].body.data));
         }
         const mailBody= new Buffer.from(body, 'base64').toString();
-        console.log(mailBody);
-        
+        emailQueue.add(
+            {mailBody},{fifo:true, attempts:1, delay:4000}
+        ) 
     }
 }
 
