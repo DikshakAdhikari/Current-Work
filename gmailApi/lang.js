@@ -7,16 +7,16 @@ const model = new ChatGroq({
   apiKey: process.env.GROQ_KEY,
 });
 const prompt = ChatPromptTemplate.fromMessages([
-  ["system", "You are a helpful assistant"],
-  ["human", "Where is agra?"],
+  ["system", "If the input by the user consists of the words like 'complex' or 'seldom' then suggest some random time else just tell that you don't know the answer. Don't give answer other then the above stated"],
+  ["human", "{input}"],
 ]);
 
 const chain = prompt.pipe(model);
 const fun = async ()=> {
     const response =  await chain.invoke({
-        input: "Hello",
+        input: "Where is agara",
       });
-      console.log("response", response);
+      console.log("response", response.lc_kwargs.content);
 }
 
 fun()

@@ -1,4 +1,5 @@
 const authorize = require('../gmailApi/services/googleAPIAuthService');
+require('./processors/index')
 const {listOfLabels , sendEmail, getLatestMessage, getMessages, test}= require('../gmailApi/services/gmailApiServices')
 
 
