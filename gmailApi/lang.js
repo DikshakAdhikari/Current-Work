@@ -1,9 +1,10 @@
-
+const dotenv= require("dotenv")
+dotenv.config()
 const {ChatPromptTemplate} = require("@langchain/core/prompts");
 const { ChatGroq } = require("@langchain/groq");
 
 const model = new ChatGroq({
-  apiKey: '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',
+  apiKey: process.env.GROQ_KEY,
 });
 const prompt = ChatPromptTemplate.fromMessages([
   ["system", "You are a helpful assistant"],
