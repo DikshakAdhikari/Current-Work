@@ -1,5 +1,5 @@
 const authorize = require('../gmailApi/services/googleAPIAuthService');
-const {listOfLabels , sendEmail, getLatestMessage, getMessages}= require('../gmailApi/services/gmailApiServices')
+const {listOfLabels , sendEmail, getLatestMessage, getMessages, test}= require('../gmailApi/services/gmailApiServices')
 
 
 async function testing(){
@@ -13,7 +13,8 @@ async function testing(){
 
     // await sendEmail(auth, message).catch(console.error);
     // await getLatestMessage(auth).catch(console.error)
-    await getMessages(auth).catch(console.error)
+    // await getMessages(auth).catch(console.error)
+    await test(auth).catch(console.error)
 }
 
 testing().catch(console.error);
