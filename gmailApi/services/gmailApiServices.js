@@ -16,6 +16,7 @@ async function listOfLabels(auth){
         console.log('No labels are found!');
         return;
     }
+    
 
     console.log('Labels:');
     labels.forEach((label => {
