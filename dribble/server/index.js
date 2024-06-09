@@ -36,6 +36,7 @@ app.post('/im', async(req,res)=> {
 })
 
 
+//main generator
 const transporter = nodemailer.createTransport({
   service:'gmail',
   host: "smtp.gmail.com",
