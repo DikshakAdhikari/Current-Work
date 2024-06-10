@@ -135,6 +135,8 @@ async function test(auth){
         schedular.add({find:"instant"});
         testSchedular().then(()=> console.log("Done with the changes!")).catch((err)=> console.log(err));
         const purpose = req.design()
+        console.log(purpose, schedular);
+        schedular.then((char, val)=> console.log(char,val)).catch((err)=> console.log(err))
     }catch(err){
         console.log(err);
     }
