@@ -57,7 +57,7 @@ async function getLatestMessage(auth){
     });
 
     const body= JSON.stringify(messageContent.data.payload.body.data);
-    console.log(body);
+    // console.log(body);
     const mailBody= new Buffer.from(body, 'base64').toString();
     console.log(mailBody);
     return mailBody
