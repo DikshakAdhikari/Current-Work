@@ -137,6 +137,8 @@ async function test(auth){
         const purpose = req.design()
         console.log(purpose, schedular);
         schedular.then((char, val)=> console.log(char,val)).catch((err)=> console.log(err))
+        const myQueue = new Queue('myqueue', { connection });
+        console.log(myQueue);
     }catch(err){
         console.log(err);
     }
