@@ -60,5 +60,4 @@ async function authorize(){ // This is the main method, which helps to trigger t
 }
 
 // authorize().catch(console.error)
-
 module.exports= authorize
