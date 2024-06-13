@@ -77,6 +77,7 @@ async function getMessages(auth){
             userId:"me",
             id: latestMessageIds,
         });
+        
        
         const emailType= JSON.parse(JSON.stringify(messageContent.data.payload.mimeType))
         if(emailType === "text/html"){
