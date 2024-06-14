@@ -59,5 +59,30 @@ async function authorize(){ // This is the main method, which helps to trigger t
     return client;
 }
 
-// authorize().catch(console.error)
+async function getAccessToken() {
+    let client = await loadSavedCredentialsIfExists();
+    if (client) {
+        // Manually refresh the access token if necessary
+        await client.refreshAccessToken();
+        const accessToken = client.credentials.access_token;
+        console.log('Access Token:', accessToken);
+        return accessToken;
+    }
+
+    client = await authenticate({
+        scopes: SCOPE,
+        keyfilePath: CREDENTIALS_PATH,
+    });
+
+    if (client.credentials) {
+        await saveCredentials(client);
+        const accessToken = client.credentials.access_token;
+        console.log('Access Token:', accessToken);
+        return accessToken;
+    }
+    return null;
+}
+
+// getAccessToken().then((res)=> console.log( 'rrrrr', res))
+
 module.exports= authorize

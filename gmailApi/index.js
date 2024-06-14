@@ -5,6 +5,7 @@ const {listOfLabels , sendEmail, getLatestMessage, getMessages, test}= require('
 
 async function testing(){
     let auth= await authorize().then().catch(console.error)
+    console.log(auth);
     // await listOfLabels(auth).then().catch(console.error)
 
     let message= 'TO: ddikshakk@gmail.com\n' +
