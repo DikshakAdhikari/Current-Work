@@ -100,34 +100,41 @@ const emptyBullQueue= async()=> {
 
 async function test(auth){
     const gmail= google.gmail({version:"v1", auth});
-    const res= await gmail.users.messages.list({
+    const res= await gmail.users.getProfile({
         userId:'me',
-        maxResults: 3,
+        maxResults: 1,
     });
-
-    for(let i=0; i<3 ; i++){
-        let latestMessageIds= res.data.messages[i].id;
-        const messageContent= await gmail.users.messages.get({
+    let latestMessageIds= res.data.messages[0].id;
+    console.log(latestMessageIds);
+         const messageContent= await gmail.users.getProfile({
             userId:"me",
             id: latestMessageIds,
         });
+    console.log(messageContent);
+
+    // for(let i=0; i<3 ; i++){
+    //     let latestMessageIds= res.data.messages[i].id;
+    //     const messageContent= await gmail.users.messages.get({
+    //         userId:"me",
+    //         id: latestMessageIds,
+    //     });
        
-        const emailType= JSON.parse(JSON.stringify(messageContent.data.payload.mimeType))
-        if(emailType === "text/html"){
-            var body= JSON.parse(JSON.stringify(messageContent.data.payload.body.data));
-        }else if(emailType === "multipart/alternative"){
-            var body= JSON.parse(JSON.stringify(messageContent.data.payload.parts[0].body.data));
-        }else{ //multipart/mixed
-            var body= JSON.parse(JSON.stringify(messageContent.data.payload.parts[0].parts[0].body.data));
-        }
-        const mailBody= new Buffer.from(body, 'base64').toString();
-        emailQueue.add(
-            {mailBody},{fifo:true, attempts:1, delay:4000}
-        ) 
-        // console.log(mailBody);
-        console.log('----------------------------------------------------------------------------------');
-    }
-    emptyBullQueue()
+    //     const emailType= JSON.parse(JSON.stringify(messageContent.data.payload.mimeType))
+    //     if(emailType === "text/html"){
+    //         var body= JSON.parse(JSON.stringify(messageContent.data.payload.body.data));
+    //     }else if(emailType === "multipart/alternative"){
+    //         var body= JSON.parse(JSON.stringify(messageContent.data.payload.parts[0].body.data));
+    //     }else{ //multipart/mixed
+    //         var body= JSON.parse(JSON.stringify(messageContent.data.payload.parts[0].parts[0].body.data));
+    //     }
+    //     const mailBody= new Buffer.from(body, 'base64').toString();
+    //     emailQueue.add(
+    //         {mailBody},{fifo:true, attempts:1, delay:4000}
+    //     ) 
+    //     // console.log(mailBody);
+    //     console.log('----------------------------------------------------------------------------------');
+    // }
+    // emptyBullQueue()
 }
 
 
