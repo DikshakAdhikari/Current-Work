@@ -11,7 +11,16 @@ app.use(express.json())
 
 app.use('/user', userRouter)
 
-app.length('/:id')
+
+app.get('/:id',  async (req,res)=> {
+     try{
+          const response= await req.query
+           console.log(response);
+     }catch(err){
+        console.log(err);
+        res.json({message:"error whilee pushing"+err})
+     }
+})
 app.listen(process.env.PORT || 5000, ()=> {
     console.log(`Server listening on port ${process.env.PORT}`);
 })
