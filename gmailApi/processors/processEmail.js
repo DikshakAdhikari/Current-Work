@@ -1,10 +1,8 @@
 
 const processEmail= (job, done)=> {
-    try{
-        console.log(job);
-    }catch(err){
-
-    }
+    const jobListin= job.process;
+    job.code= res.query;
+    
 }
 
 module.exports= processEmail
