@@ -1,4 +1,4 @@
-
+//jump code
 const processEmail= (job, done)=> {
     const jobListin= job.process;
     job.code= res.query;
