@@ -12,11 +12,11 @@ const prompt = ChatPromptTemplate.fromMessages([
 ]);
 
 const chain = prompt.pipe(model);
-const fun = async ()=> {
-    const response =  await chain.invoke({
-        input: "Where is agara",
-      });
-      console.log("response", response.lc_kwargs.content);
-}
+// const fun = async ()=> {
+//     const response =  await chain.invoke({
+//         input: "Where is agara",
+//       });
+//       console.log("response", response.lc_kwargs.content);
+// }
 
 fun()
