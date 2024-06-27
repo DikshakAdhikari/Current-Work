@@ -9,7 +9,7 @@ const emailQueue = new Queue("emailQueue", {
  emailQueue.process(path.join(__dirname, "processEmail.js"))
 
 
-emailQueue.on("completed", (job) => {
-    console.log(`Completed #${job.id} Job`);
-  });
+// emailQueue.on("completed", (job) => {
+//     console.log(`Completed #${job.id} Job`);
+//   });
   
