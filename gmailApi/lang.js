@@ -16,7 +16,8 @@ const fun = async ()=> {
     const response =  await chain.invoke({
         input: "Where is agara",
       });
-      console.log("response", response.lc_kwargs.content);
+
+      // console.log("response", response.lc_kwargs.content);
 }
 
 fun()
