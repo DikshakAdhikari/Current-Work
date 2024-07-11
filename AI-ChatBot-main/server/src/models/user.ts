@@ -59,7 +59,7 @@ const userSchema = new Schema<IUser>(
             type: String
         },
         
-         emailVerified: { type: Boolean, default: false },
+         emailVerified: { type: Boolean, default: false, required:true},
         
     },
     {
@@ -76,6 +76,13 @@ userSchema.static('isPasswordMatch', async function(email:string, password: stri
 // Check email is already in use or not
 userSchema.static('isEmailUsed', async function(email) {
     const user: IUser = await this.findOne({email});
+    if(user){
+    if(user.emailVerified === false){
+        console.log(this);
+        await this.deleteMany({email})
+    }
+    }
+    
     return !!user;
 });
 

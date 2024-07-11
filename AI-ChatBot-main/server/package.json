@@ -32,6 +32,7 @@
     "hi-base32": "^0.5.1",
     "mongoose": "^8.0.3",
     "nodemailer": "^6.9.14",
+    "nodemon": "^3.1.4",
     "otpauth": "^9.2.1",
     "qrcode": "^1.5.3",
     "ts-node": "^10.9.1"
