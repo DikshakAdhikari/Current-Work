@@ -5,16 +5,65 @@ import { GiCharacter } from "react-icons/gi";
 import { FaCamera } from "react-icons/fa6";
 import { FaUserPen } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/services";
 const Navbar = () => {
   const [selectedLink, setSelectedLink] = useState<number | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [qr, setQr]= useState("")
+  const [toggle, setToggle]= useState(false)
+  const userId= localStorage.getItem("userId")
+const router= useRouter()
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
   const handleClick = (index:number) => {
     setSelectedLink(index);
   };
+
+
+  const handleDone= async()=> {
+    const res= await fetch(`${BASE_URL}/api/auth/done2fa`, {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({userId:localStorage.getItem("userId")})
+    })
+    if(!res.ok){
+      throw new Error("network problem!")
+    }
+    const data= await res.json()
+    console.log(data);
+    router.refresh()
+    
+  }
+  
+
+  const handle2fauth = async()=> {
+    
+    const res= await fetch(`${BASE_URL}/api/auth/enable2fa`, {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({userId:localStorage.getItem("userId")})
+    })
+    if(!res.ok){
+      throw new Error("network problem!")
+    }
+    const data= await res.json()
+    // console.log(data.data.qrCodeUrl);
+    setQr(data.data.qrCodeUrl)
+    setToggle(!toggle)
+    
+  }
+  
+  const handleLogout= ()=> {
+    localStorage.clear()
+    router.refresh()
+  }
+  
   return (
     <nav className="bg-gray-600 p-3">
       <div className="  flex justify-between items-center">
@@ -120,23 +169,44 @@ const Navbar = () => {
             <GiCharacter
               style={{ display: "inline-block", marginRight: "5px" }}
             />
-            My Profile
+            {userId ? "My Profile":"Create Account"}
+           
             <FaCaretDown
               style={{ display: "inline-block", marginLeft: "5px" }}
             />
           </a>
-          {dropdownOpen && (
-        <div className="absolute mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+
+          {(!userId && dropdownOpen) &&
+        <div className="absolute right-6 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             <a href="/register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
               Signup
             </a>
-            <a href="/signin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+            <a href="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
               Signin
             </a>
           </div>
         </div>
-      )}
+      }
+
+{(userId && dropdownOpen) &&
+        <div className="absolute right-6 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+            <a onClick={handle2fauth}  className="block px-4 cursor-pointer py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+              Enable 2f auth
+            </a>
+            {
+              toggle && <div className=" flex flex-col items-center">
+                <img src={qr} alt="" />
+                <button onClick={handleDone} className=" p-2 rounded-md text-sm bg-green-600 text-white">Done</button>
+              </div>
+            }
+            <a onClick={handleLogout} className="block px-4 cursor-pointer py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+              Logout
+            </a>
+          </div>
+        </div>
+      }
         </div>
       </div>
     </nav>

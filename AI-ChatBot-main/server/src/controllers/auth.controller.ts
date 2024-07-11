@@ -144,9 +144,20 @@ const Verify2fa = async (req: Request, res: Response) => {
     })
 }
 
+const Done2fa =async (req: Request, res: Response) => {
+    const { userId } = req.body;
+    
+    await User.updateOne({_id: userId}, {enable2fa:true});
+    res.json({
+        status: "success"
+    })
+}
+
+
 export default {
     RegisterUser,
     LoginUser,
     Enable2FA,
-    Verify2fa
+    Verify2fa,
+    Done2fa
 }
