@@ -17,7 +17,6 @@ const Page: React.FC = () => {
   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId");
-
     if (otp.length === 4) {
       const res = await fetch(`${BASE_URL}/otp/verifyOtp`, {
         method: "POST",
@@ -32,17 +31,20 @@ const Page: React.FC = () => {
         throw new Error("Network problem!");
       }
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
 
       if (data.status === "VERIFIED") {
-        router.push('/home');
+        alert("OTP verified succesfully.Login to continue!")
+        router.push('/login');
       } else {
-        alert("Wrong/empty password, Signup again!");
-        router.push("/");
+        alert("Wrong/empty OTP, Signup again!");
+        localStorage.clear()
+        router.push("/register");
       }
 
     } else {
       console.log('Please enter a 4-digit OTP');
+      localStorage.clear()
     }
   };
 

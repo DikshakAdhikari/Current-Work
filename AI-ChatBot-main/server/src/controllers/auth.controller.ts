@@ -75,7 +75,7 @@ const Enable2FA = async (req: Request, res: Response) => {
     await User.updateOne({_id: userId}, {secrets2fa: base32_secret});
 
     //Generate TOTP auth url
-    let totp = new OTPAuth.TOTP({
+    let totp = new OTPAuth.TOTP({ //time based one time password
         issuer: "codeninjainsights.com",
         label: "codeninjainsights",
         algorithm: "SHA1",

@@ -24,7 +24,7 @@ const page = () => {
     const [error, setError] = useState<string>(""); 
     const [showPassword, setShowPassword] = useState<boolean>(false); 
     const [showRetypePassword, setShowRetypePassword] = useState<boolean>(false); 
-    console.log(formData);
+    // console.log(formData);
     
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => { 
       event.preventDefault();
@@ -43,7 +43,7 @@ const page = () => {
         }
   
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         
         if (!response.ok) {
           if (
@@ -62,7 +62,7 @@ const page = () => {
         }
       } catch (error) {
         alert("Email already exists. Login to continue!");
-        // router.push("/login");
+        router.push("/login");
       }
     };
   

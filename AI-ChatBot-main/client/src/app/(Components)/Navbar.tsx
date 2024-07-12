@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { GiCharacter } from "react-icons/gi";
 import { FaCamera } from "react-icons/fa6";
@@ -14,6 +14,34 @@ const Navbar = () => {
   const [toggle, setToggle]= useState(false)
   const userId= localStorage.getItem("userId")
 const router= useRouter()
+const [firstname, setFirstname]= useState("Create Account")
+
+useEffect(()=> {
+  const fun= async()=> {
+    try{
+      const res= await fetch(`${BASE_URL}/api/auth`,{
+        method:"POST",
+        headers:{
+          'Content-Type':"application/json"
+        },
+        body: JSON.stringify({userId:localStorage.getItem("userId")})
+      });
+
+      const data= await res.json()
+      console.log(data);
+      setFirstname(data.firstname)
+      
+    }catch(err){
+      console.log(err);
+      setFirstname("Create Account")
+    }
+  }
+
+  fun()
+},[firstname])
+
+
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -35,6 +63,9 @@ const router= useRouter()
     }
     const data= await res.json()
     console.log(data);
+    alert("User Successfully scanned QR and did setup their Authenticator App!")
+    setToggle(false)
+    setDropdownOpen(false)
     router.refresh()
     
   }
@@ -61,6 +92,7 @@ const router= useRouter()
   
   const handleLogout= ()=> {
     localStorage.clear()
+    setFirstname("Create Account")
     router.refresh()
   }
   
@@ -169,7 +201,7 @@ const router= useRouter()
             <GiCharacter
               style={{ display: "inline-block", marginRight: "5px" }}
             />
-            {userId ? "My Profile":"Create Account"}
+            {firstname}
            
             <FaCaretDown
               style={{ display: "inline-block", marginLeft: "5px" }}
