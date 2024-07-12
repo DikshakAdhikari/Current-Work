@@ -107,6 +107,8 @@ const generateBase32Secret = () => {
 }
 const Verify2fa = async (req: Request, res: Response) => {
     const { userId, token } = req.body;
+    console.log(userId,token);
+    
     const user = await User.findOne({_id: userId});
     if(!user) {
         return res.status(404).json({
@@ -153,11 +155,18 @@ const Done2fa =async (req: Request, res: Response) => {
     })
 }
 
+const getUserInfo= async (req: Request, res: Response) => {
+    const {userId}= req.body;
+    const user= await User.findOne({_id:userId})
+    console.log(user);
+    res.json(user)
+}
 
 export default {
     RegisterUser,
     LoginUser,
     Enable2FA,
     Verify2fa,
-    Done2fa
+    Done2fa,
+    getUserInfo
 }
