@@ -52,7 +52,6 @@ const page = () => {
             throw new Error(data.message); 
           }
         }
-        console.log(data);
         
         if (data) {
           
@@ -63,6 +62,7 @@ const page = () => {
             localStorage.setItem("enable2fa","true")
           }else{
             localStorage.setItem("userId", data.data.user.id);
+            localStorage.setItem("enable2fa","false")
             alert("Logged in successfully!")
             router.push('/')
           }
