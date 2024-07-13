@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
       user: process.env.EMAIL,
       pass: process.env.EMAIL_PASSWORD,
     },
+    
   });
 
   import bcrypt from 'bcrypt';  
