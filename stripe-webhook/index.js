@@ -26,7 +26,7 @@ app.post('/webhooks', express.raw({type: 'application/json'}), async(request, re
       console.log(event);
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
-      console.log(err);
+      console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',err);
       return;
     }
 
