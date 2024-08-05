@@ -12,7 +12,7 @@ app.post(
   express.raw({ type: "application/json" }),
   (request, response) => {
     const sig = request.headers["stripe-signature"];
-console.log(sig);
+
     let event;
     const product =
       "https://drive.google.com/file/d/1K5LwwK-4875LMuT2978Yw8vr1MU0oPck/view?usp=drive_link";
@@ -24,7 +24,7 @@ console.log(sig);
         sig,
         process.env.STRIPE_SIGNING_SECRET
       );
-      console.log(event);
+    
     } catch (err) {
       console.error(`Webhook Error: ${err.message}`);
       response.status(400).send(`Webhook Error: ${err.message}`);
@@ -69,7 +69,7 @@ console.log(sig);
                       Here's the link to the product from Google Drive: ${product}. You can download the file by going to this link.
                     `, // HTML body
           });
-          console.log("Message sent: %s", info.messageId);
+          // console.log("Message sent: %s", info.messageId);
         }
         main().catch(console.error);
         break;
