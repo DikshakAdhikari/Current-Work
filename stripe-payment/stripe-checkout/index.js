@@ -2,6 +2,7 @@ const express= require('express')
 const dotenv= require('dotenv')
 dotenv.config()
 const stripe= require('stripe')(process.env.STRIPE_PASSWORD)
+
 const app= express()
 
 
