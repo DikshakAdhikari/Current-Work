@@ -4,6 +4,8 @@ import morgan from "morgan";
 import authRouter from "./routes/auth.route";
 import { connectMongoose } from "./configs/mongo";
 import OtpRouter from "../src/routes/emailVerification";
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
 
@@ -20,6 +22,9 @@ app.get("/api/health", (req: Request, res: Response) => {
     })
 });
 
+app.get("/", (req: Request, res: Response) => {
+    res.send({message:"Hello People :)"})
+});
 // User Routes
 app.use("/api/auth", authRouter)
 app.use("/otp", OtpRouter )
@@ -31,8 +36,8 @@ app.all("*", (req: Request, res: Response) => {
     })
 });
 
-app.listen(5000, async () => {
-    console.log("Server is Successfully Running, and App is listening on port "+ 5000)
+app.listen(process.env.PORT || 3002, async () => {
+    console.log("Server is Successfully Running, and App is listening on port "+ process.env.PORT || 3002)
     
     // connect Mongodb
     await connectMongoose()
