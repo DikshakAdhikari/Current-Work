@@ -7,14 +7,14 @@ import OtpRouter from "../src/routes/emailVerification";
 import dotenv from 'dotenv'
 dotenv.config()
 
+connectMongoose()
 const app = express();
-
 
 app.use(morgan("dev"))
 app.use(cors({ origin: "*", methods: ["GET", "POST", "DELETE", "PUT"] }));
 app.use(express.json())
 
-connectMongoose()
+
 
 app.use("/api/auth", authRouter)
 app.use("/otp", OtpRouter )
