@@ -89,5 +89,5 @@ userSchema.pre('save', function (next) {
         next();
     });
 });
-const User = (0, mongoose_1.model)('client', userSchema);
+const User = (0, mongoose_1.model)('aiclient', userSchema);
 exports.default = User;

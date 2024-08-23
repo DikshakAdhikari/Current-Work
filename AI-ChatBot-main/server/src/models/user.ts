@@ -95,5 +95,5 @@ userSchema.pre('save', async function(next) {
     next();
 })
 
-const User = model<IUser, UserModel>('client', userSchema);
+const User = model<IUser, UserModel>('aiclient', userSchema);
 export default User;
