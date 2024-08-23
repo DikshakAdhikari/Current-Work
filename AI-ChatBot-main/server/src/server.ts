@@ -14,6 +14,8 @@ app.use(morgan("dev"))
 app.use(cors({ origin: "*", methods: ["GET", "POST", "DELETE", "PUT"] }));
 app.use(express.json())
 
+connectMongoose()
+
 app.use("/api/auth", authRouter)
 app.use("/otp", OtpRouter )
 
@@ -37,11 +39,9 @@ app.all("*", (req: Request, res: Response) => {
     })
 });
 
-app.listen(process.env.PORT || 3002, async () => {
-    console.log("Server is Successfully Running, and App is listening on port "+ process.env.PORT || 3002)
-    
-    // connect Mongodb
-    await connectMongoose()
+app.listen(process.env.PORT || 5000, async () => {
+    console.log("Server is Successfully Running, and App is listening on port "+ process.env.PORT || 5000)
+
 });
 
 
