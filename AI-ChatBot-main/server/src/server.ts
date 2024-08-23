@@ -9,12 +9,15 @@ dotenv.config()
 
 const app = express();
 
-// Middleware 
+
 app.use(morgan("dev"))
 app.use(cors({ origin: "*", methods: ["GET", "POST", "DELETE", "PUT"] }));
 app.use(express.json())
 
-// Health route
+app.use("/api/auth", authRouter)
+app.use("/otp", OtpRouter )
+
+
 app.get("/api/health", (req: Request, res: Response) => {
     res.status(200).json({
         status: "success",
@@ -25,9 +28,7 @@ app.get("/api/health", (req: Request, res: Response) => {
 app.get("/", (req: Request, res: Response) => {
     res.send({message:"Hello People :)"})
 });
-// User Routes
-app.use("/api/auth", authRouter)
-app.use("/otp", OtpRouter )
+
 
 app.all("*", (req: Request, res: Response) => {
     res.status(404).json({
