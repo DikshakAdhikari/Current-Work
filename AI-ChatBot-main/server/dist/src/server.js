@@ -20,6 +20,7 @@ const mongo_1 = require("./configs/mongo");
 const emailVerification_1 = __importDefault(require("../src/routes/emailVerification"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+(0, mongo_1.connectMongoose)();
 const app = (0, express_1.default)();
 app.use((0, morgan_1.default)("dev"));
 app.use((0, cors_1.default)({ origin: "*", methods: ["GET", "POST", "DELETE", "PUT"] }));
@@ -41,8 +42,6 @@ app.all("*", (req, res) => {
         message: `Route ${req.originalUrl} is not found`
     });
 });
-app.listen(process.env.PORT || 3002, () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Server is Successfully Running, and App is listening on port " + process.env.PORT || 3002);
-    // connect Mongodb
-    yield (0, mongo_1.connectMongoose)();
+app.listen(process.env.PORT || 5000, () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Server is Successfully Running, and App is listening on port " + process.env.PORT || 5000);
 }));

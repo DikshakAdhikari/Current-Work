@@ -16,7 +16,6 @@ exports.connectMongoose = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-var uri = "mongodb://localhost:27017/2fa_node";
 const connectMongoose = () => __awaiter(void 0, void 0, void 0, function* () {
     if (typeof process.env.MONGO_URI === "string") {
         mongoose_1.default.connect(process.env.MONGO_URI).then(() => console.log('DB connected successfully')).catch((err) => console.log(err));
